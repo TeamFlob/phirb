@@ -45,8 +45,8 @@ jobs:
 
     - name: Build for Android
       env:
-        CC: $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang
-        AR: $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
+        CC: $ANDROID_NDK_HOME/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang
+        AR: $ANDROID_NDK_HOME/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
       run: |
         cd phira/phira
         rustup target add aarch64-linux-android
