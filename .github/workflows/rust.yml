@@ -1,0 +1,59 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+
+env:
+  CARGO_TERM_COLOR: always
+  # 设置ANDROID_HOME环境变量
+  ANDROID_HOME: ${{github.workspace}}/android-sdk
+  # 设置ANDROID_NDK_HOME环境变量
+  ANDROID_NDK_HOME: ${{github.workspace}}/android-ndk
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: git clone https://github.com/PitRc47/phira --depth 1 --branch juegement-modify
+
+    # 安装Android SDK和NDK
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '11'
+
+    - name: Install Android SDK tools
+      run: |
+        wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+        mkdir -p $ANDROID_HOME/cmdline-tools
+        unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME/cmdline-tools
+        echo y | $ANDROID_HOME/cmdline-tools/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;30.0.3" "platforms;android-30"
+
+    - name: Download Android NDK
+      run: |
+        wget https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip
+        mkdir -p $ANDROID_NDK_HOME
+        unzip android-ndk-r21e-linux-x86_64.zip -d $ANDROID_NDK_HOME
+
+    - name: Build for Android
+      env:
+        CC: $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang
+        AR: $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
+      run: |
+        cd phira
+        cargo build --target aarch64-linux-android --release
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-build
+        path: |
+          target/aarch64-linux-android/release/*.so
