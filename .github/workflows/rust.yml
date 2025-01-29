@@ -63,7 +63,8 @@ jobs:
       run: |
         export PATH=/home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
         export PATH=/home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/lib:$PATH
-        
+        export LIBRARY_PATH=/home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/lib:$LIBRARY_PATH
+        export LD_LIBRARY_PATH=/home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/lib:$LD_LIBRARY_PATH
         cd phira/phira
         cp /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang
         cp /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang++ /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang++
