@@ -45,10 +45,12 @@ jobs:
 
     - name: Build for Android
       env:
-        CC: $ANDROID_NDK_HOME/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang
-        AR: $ANDROID_NDK_HOME/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
+        CC: /home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang
+        AR: /home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
       run: |
         cd phira/phira
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev libasound2-dev libssl-dev pkg-config
         rustup target add aarch64-linux-android
         cargo build --target aarch64-linux-android --release
 
