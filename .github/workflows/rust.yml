@@ -49,6 +49,7 @@ jobs:
         AR: $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
       run: |
         cd phira/phira
+        rustup target add aarch64-linux-android
         cargo build --target aarch64-linux-android --release
 
     - name: Upload artifact
