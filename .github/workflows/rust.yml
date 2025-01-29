@@ -48,23 +48,23 @@ jobs:
         wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
         mkdir -p $ANDROID_HOME/cmdline-tools
         unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME/cmdline-tools
-        echo y | $ANDROID_HOME/cmdline-tools/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;30.0.3" "platforms;android-30"
+        echo y | $ANDROID_HOME/cmdline-tools/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
 
     - name: Download Android NDK
       run: |
-        wget https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip
+        wget https://dl.google.com/android/repository/android-ndk-r27c-linux-x86_64.zip
         mkdir -p $ANDROID_NDK_HOME
-        unzip android-ndk-r21e-linux-x86_64.zip -d $ANDROID_NDK_HOME
+        unzip android-ndk-r27c-linux-x86_64.zip -d $ANDROID_NDK_HOME
 
     - name: Build for Android
       env:
-        CC: /home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang
-        AR: /home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
+        CC: /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang
+        AR: /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar
       run: |
-        export PATH=/home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
+        export PATH=/home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
         cd phira/phira
-        cp /home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang /home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang
-        cp /home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang++ /home/runner/work/phira/phira/android-ndk/android-ndk-r21e/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang++
+        cp /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang
+        cp /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang++ /home/runner/work/phira/phira/android-ndk/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang++
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev libasound2-dev libssl-dev pkg-config
         rustup target add aarch64-linux-android
