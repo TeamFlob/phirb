@@ -35,7 +35,7 @@ jobs:
         wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
         mkdir -p $ANDROID_HOME/cmdline-tools
         unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME/cmdline-tools
-        echo y | $ANDROID_HOME/cmdline-tools/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;30.0.3" "platforms;android-30"
+        echo y | $ANDROID_HOME/cmdline-tools/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;30.0.3" "platforms;android-30"
 
     - name: Download Android NDK
       run: |
@@ -48,7 +48,7 @@ jobs:
         CC: $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang
         AR: $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
       run: |
-        cd phira
+        cd phira/phira
         cargo build --target aarch64-linux-android --release
 
     - name: Upload artifact
