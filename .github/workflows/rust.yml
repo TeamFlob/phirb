@@ -57,4 +57,4 @@ jobs:
       with:
         name: android-build
         path: |
-          target/aarch64-linux-android/release/*.so
+          phira/target/aarch64-linux-android/release/*.so
