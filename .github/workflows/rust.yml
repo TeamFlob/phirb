@@ -33,12 +33,9 @@ jobs:
       run: mkdir phira/prpr-avc/static-lib
 
     - name: Extract static-lib
-      uses: a7ul/tar-action@v1.1.0
-      id: extract-static-lib
-      with:
-        command: x
-        cwd: phira/prpr-avc/static-lib
-        files: prpr-avc-static-lib.tar.gz
+      run: |
+        unzip prpr-avc.zip -d phira
+
     # 安装Android SDK和NDK
     - name: Set up JDK 11
       uses: actions/setup-java@v3
