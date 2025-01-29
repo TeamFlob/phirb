@@ -54,7 +54,7 @@ jobs:
       run: |
         wget https://googledownloads.cn/android/repository/android-ndk-r27c-linux.zip
         mkdir -p $ANDROID_NDK_HOME
-        unzip android-ndk-r27c-linux-x86_64.zip -d $ANDROID_NDK_HOME
+        unzip android-ndk-r27c-linux.zip -d $ANDROID_NDK_HOME
 
     - name: Build for Android
       env:
