@@ -227,7 +227,6 @@ impl HomePage {
 
         self.char_appear_p.set(0.);
 
-        #[cfg(feature = "closed")]
         if self.character.illust == "@" {
             let id = self.character.id.clone();
             self.char_illu_task =

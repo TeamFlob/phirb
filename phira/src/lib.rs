@@ -1,6 +1,5 @@
 prpr::tl_file!("common" ttl crate::);
 
-#[cfg(feature = "closed")]
 mod inner;
 
 mod anim;
@@ -45,7 +44,6 @@ static DATA_PATH: Mutex<Option<String>> = Mutex::new(None);
 static CACHE_DIR: Mutex<Option<String>> = Mutex::new(None);
 pub static mut DATA: Option<Data> = None;
 
-#[cfg(feature = "closed")]
 pub async fn load_res(name: &str) -> Vec<u8> {
     let bytes = load_file(name).await.unwrap();
     inner::resolve_data(bytes)

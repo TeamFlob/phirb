@@ -4,7 +4,6 @@ pub fn resolve_data(rawdata: Vec<u8>) -> Vec<u8> {
     let mut v16 = data.as_mut_slice();
     
     while v11 > 0 {
-        // 使用一个临时作用域来处理 v16 的借用
         {
             let v18 = &mut v16[..];
             let v19 = if v11 >= 8 { 8 } else { v11 };
