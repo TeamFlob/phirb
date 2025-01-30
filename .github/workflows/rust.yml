@@ -14,7 +14,7 @@ env:
   ANDROID_HOME: ${{github.workspace}}/android-sdk
   # 设置ANDROID_NDK_HOME环境变量
   ANDROID_NDK_HOME: /home/runner/work/phira/phira/android-ndk-r27c
-
+  ANDROID_NDK_ROOT: /home/runner/work/phira/phira/android-ndk-r27c
 jobs:
   build:
 
@@ -47,8 +47,8 @@ jobs:
       run: |
         wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
         mkdir -p $ANDROID_HOME/cmdline-tools
-        unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME/cmdline-tools
-        echo y | $ANDROID_HOME/cmdline-tools/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
+        unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME
+        echo y | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
 
     - name: Download Android NDK
       run: |
