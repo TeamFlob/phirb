@@ -60,4 +60,4 @@ jobs:
       with:
         name: android-build
         path: |
-          phira/target/aarch64-linux-android/release/libphira.so
+          target/aarch64-linux-android/release/libphira.so
