@@ -488,7 +488,7 @@ impl Scene for EndingScene {
                 format!("{:.2}x", self.speed)
             };
             let text = if self.autoplay {
-                format!("AUTOPLAY {spd}")
+                format!("UNRATED {spd}")
             } else if !self.rated {
                 format!("UNRATED {spd}")
             } else {

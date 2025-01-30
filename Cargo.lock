@@ -2426,7 +2426,7 @@ dependencies = [
 
 [[package]]
 name = "phira"
-version = "0.6.7"
+version = "0.6.7-yyw-version"
 dependencies = [
  "anyhow",
  "arc-swap",
@@ -2478,7 +2478,7 @@ dependencies = [
 
 [[package]]
 name = "phira-main"
-version = "0.6.7"
+version = "0.6.7-yyw-version"
 dependencies = [
  "phira",
 ]
@@ -2653,7 +2653,7 @@ dependencies = [
 
 [[package]]
 name = "prpr"
-version = "0.6.7"
+version = "0.6.7-yyw-version"
 dependencies = [
  "ahash",
  "anyhow",
@@ -3206,7 +3206,7 @@ dependencies = [
 
 [[package]]
 name = "serde_spanned"
-version = "0.6.7"
+version = "0.6.7-yyw-version"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "eb5b1b31579f3811bf615c144393417496f152e12ac8b7663bf664f4a815306d"
 dependencies = [
