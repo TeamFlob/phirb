@@ -1,28 +1,13 @@
-# Phira
+# 这里是 Phira (吗？)
 
-![Phira](https://files-cf.phira.cn/github-showcase.png)
+- 此项目通过替换 `libphira.so` 文件实现对 `Android` 端 `phira` 的编译和运行
 
-[中文版本](./README-zh_CN.md)
+## 使用
 
-## Download
+- 运行 `.github/workflows/build.yml` 以构建 `libphira.so`
 
-- [GitHub Release](https://github.com/TeamFlos/phira/releases): For Android, Windows and Linux
-- [616.sb mirror](https://616.sb/#phira): Android only
-- [App Store](https://apps.apple.com/us/app/phira/id6447435864): For iOS
-- ~~[.ipa Release](https://github.com/F-Unction/phira_ipa/releases): For iOS~~
+## 原理
 
-## Contribution
-
-Issues & pull requests are welcome! Also check these good first [issues](https://github.com/TeamFlos/phira/issues?q=label%3A%22good+first+issue%22) and [pull requests](https://github.com/TeamFlos/phira/issues?q=label%3A%22good+first+issue%22).
-
-If you want to talk with us in depth, email [contact@phira.cn](mailto://contact@phira.cn). Currently we are looking for **Rust** Programmers *with rhythm/music game experience*.
-
-## Translation
-
-If you want to add your language to Phira, please check [this](https://github.com/TeamFlos/phira/pull/201#issuecomment-1783356944) out.
-
-Be free to create issues if there's any problem with the current translation.
-
-## Star History
-
-[![Stargazers over time](https://starchart.cc/TeamFlos/phira.svg?variant=adaptive)](https://starchart.cc/TeamFlos/phira)
+- 通过 `Android NDK` 编译 `libphira.so`
+- 在 `lib.rs` 中添加 `Java_quad_1native_QuadNative_preprocessInput` 函数, 避免壳无法找到函数崩溃 (Tip: 也可在 `dex` 之中吧调用操作 nop 掉)
+- 替换正常 `release` 版本中的 `libphira.so` 文件以实现更改
