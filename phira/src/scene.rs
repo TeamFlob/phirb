@@ -74,7 +74,6 @@ impl FileSystem for AssetsChartFileSystem {
         if path == ":info" {
             return Ok(serde_yaml::to_string(&ASSET_CHART_INFO.lock().unwrap().clone())?.into_bytes());
         }
-        #[cfg(feature = "closed")]
         {
             use crate::load_res;
             if path == ":music" {

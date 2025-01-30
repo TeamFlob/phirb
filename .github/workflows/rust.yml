@@ -68,7 +68,7 @@ jobs:
         cp /home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang++ /home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang++
         rustup target add aarch64-linux-android
         cargo install cargo-ndk
-        cargo ndk -t arm64-v8a -p 34 build --release
+        cargo ndk -t arm64-v8a -p 34 build --debug
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:

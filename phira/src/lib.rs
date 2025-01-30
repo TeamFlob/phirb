@@ -45,7 +45,6 @@ static DATA_PATH: Mutex<Option<String>> = Mutex::new(None);
 static CACHE_DIR: Mutex<Option<String>> = Mutex::new(None);
 pub static mut DATA: Option<Data> = None;
 
-#[cfg(feature = "closed")]
 pub async fn load_res(name: &str) -> Vec<u8> {
     let bytes = load_file(name).await.unwrap();
     inner::resolve_data(bytes)
@@ -53,14 +52,11 @@ pub async fn load_res(name: &str) -> Vec<u8> {
 
 #[allow(unused)]
 pub async fn load_res_tex(name: &str) -> SafeTexture {
-    #[cfg(feature = "closed")]
     {
         let bytes = load_res(name).await;
         let image = image::load_from_memory(&bytes).unwrap();
         image.into()
     }
-    #[cfg(not(feature = "closed"))]
-    prpr::ext::BLACK_TEXTURE.clone()
 }
 
 pub fn sync_data() {
