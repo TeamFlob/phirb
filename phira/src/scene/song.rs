@@ -738,6 +738,7 @@ impl SongScene {
             let config = &get_data().config;
             !config.offline_mode && can_rated && !mods.contains(Mods::AUTOPLAY) && config.speed >= 1.0 - 1e-3
         };
+        show_message("不要当 yyw 喵~").warn();
         if !rated && can_rated && mode == GameMode::Normal {
             show_message(tl!("warn-unrated")).warn();
         }
