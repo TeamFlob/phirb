@@ -31,7 +31,7 @@ jobs:
 
     - name: Set Up static-lib
       run: |
-        unzip prpr-avc.zip -d prpr-avc/static-lib
+        unzip prpr-avc.zip -d prpr-avc
 
     - name: Install Android SDK Tools
       run: |
