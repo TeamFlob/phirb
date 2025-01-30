@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - run: git clone https://github.com/qaqFei/phirb --depth 1 --branch juegement-modify
+    - run: git clone https://github.com/qaqFei/phirb --depth 1
     - run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev libasound2-dev libssl-dev pkg-config
