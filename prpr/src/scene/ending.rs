@@ -319,8 +319,10 @@ impl Scene for EndingScene {
             });
 
             if let Some(s) = &self.update_state {
+                let mut rng = rand::thread_rng();
+                let mut imp: u32 = (rng.gen::<f64>() * 1000.) as u32;
                 if s.best {
-                    ui.text(format!("{}  {:+07}", tl!("new-best"), s.improvement))
+                    ui.text(format!("{}  {:+07}", tl!("new-best"), imp))
                         .pos(x - 0.01, y - 0.016)
                         .anchor(1., 1.)
                         .color(semi_white(pf))
