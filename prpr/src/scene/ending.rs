@@ -14,10 +14,11 @@ use crate::{
 };
 use anyhow::Result;
 use macroquad::prelude::*;
+use rand::Rng;
 use sasa::{AudioClip, AudioManager, Music, MusicParams};
 use serde::Deserialize;
 use std::{cell::RefCell, ops::DerefMut};
-extern crate rand;
+use ::rand::{ thread_rng, Rng as _ };
 
 #[derive(Deserialize)]
 pub struct RecordUpdateState {
@@ -320,7 +321,7 @@ impl Scene for EndingScene {
 
             if let Some(s) = &self.update_state {
                 let mut rng = rand::thread_rng();
-                let mut imp: u32 = (rng.gen::<f64>() * 1000.) as u32;
+                let mut imp: u32 = rng.gen_range(345..1000) as u32;
                 if s.best {
                     ui.text(format!("{}  {:+07}", tl!("new-best"), imp))
                         .pos(x - 0.01, y - 0.016)
@@ -353,7 +354,7 @@ impl Scene for EndingScene {
 
             let r = ui.text(tl!("error")).pos(r.right() + 0.03, r.y).color(cl).size(s).draw_using(&BOLD_FONT);
             let mut rng = rand::thread_rng();
-            ui.text(format!("±{}ms", (7. + rng.gen::<f64>() * 30.) as i32))
+            ui.text(format!("±{}ms", rng.gen_range(7..29) as i32))
                 .pos(r.right() + 0.02, r.y)
                 .size(s)
                 .color(ct)
