@@ -430,3 +430,13 @@ pub unsafe extern "C" fn Java_quad_1native_QuadNative_antiAddictionCallback(
         }
     }
 }
+
+#[cfg(target_os = "android")]
+#[no_mangle]
+pub unsafe extern "C" fn Java_quad_1native_QuadNative_preprocessInput(
+    _: *mut std::ffi::c_void,
+    _: *const std::ffi::c_void,
+    path: ndk_sys::jstring,
+) {
+    
+}
