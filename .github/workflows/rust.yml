@@ -34,7 +34,7 @@ jobs:
         target: ./
 
     - name: Mkdir static-lib
-      run: mkdir phira/prpr-avc/static-lib
+      run: mkdir phirb/prpr-avc/static-lib
 
     - name: Extract static-lib
       run: |
