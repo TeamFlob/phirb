@@ -17,7 +17,6 @@ use macroquad::prelude::*;
 use sasa::{AudioClip, AudioManager, Music, MusicParams};
 use serde::Deserialize;
 use std::{cell::RefCell, ops::DerefMut};
-use ::rand::{thread_rng, Rng as _};
 
 #[derive(Deserialize)]
 pub struct RecordUpdateState {
@@ -319,10 +318,8 @@ impl Scene for EndingScene {
             });
 
             if let Some(s) = &self.update_state {
-                let mut rng = thread_rng();
-                let mut imp: u32 = rng.gen_range(345..1000) as u32;
                 if s.best {
-                    ui.text(format!("{}  {:+07}", tl!("new-best"), imp))
+                    ui.text(format!("{}  {:+07}", tl!("new-best"), s.improvement))
                         .pos(x - 0.01, y - 0.016)
                         .anchor(1., 1.)
                         .color(semi_white(pf))
@@ -352,8 +349,7 @@ impl Scene for EndingScene {
             let r = ui.text("|").pos(r.right() + 0.03, r.y).color(cs).size(s).draw();
 
             let r = ui.text(tl!("error")).pos(r.right() + 0.03, r.y).color(cl).size(s).draw_using(&BOLD_FONT);
-            let mut rng = thread_rng();
-            ui.text(format!("±{}ms", rng.gen_range(7..29) as i32))
+            ui.text(format!("±{}ms", (res.std * 1000.).round() as i32))
                 .pos(r.right() + 0.02, r.y)
                 .size(s)
                 .color(ct)
