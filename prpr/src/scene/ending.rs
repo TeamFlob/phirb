@@ -17,7 +17,7 @@ use macroquad::prelude::*;
 use sasa::{AudioClip, AudioManager, Music, MusicParams};
 use serde::Deserialize;
 use std::{cell::RefCell, ops::DerefMut};
-use rand::Rng;
+extern crate rand;
 
 #[derive(Deserialize)]
 pub struct RecordUpdateState {
