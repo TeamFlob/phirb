@@ -4,7 +4,7 @@ pub fn resolve_data(rawdata: Vec<u8>) -> Vec<u8> {
     let mut v16 = data.as_mut_slice();
     
     while v11 > 0 {
-        let v18 = v16;
+        let v18 = &mut v16;
         let v19 = if v11 >= 8 { 8 } else { v11 };
         
         v16.swap(1, 4);
@@ -38,7 +38,7 @@ pub fn resolve_data(rawdata: Vec<u8>) -> Vec<u8> {
         }
 
         let mut v36 = 0usize;
-        let mut j = 0;
+        let j = 0;
         while (j & 1) != 0 {
             if v36 > 7 {
                 break;
