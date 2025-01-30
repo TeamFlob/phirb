@@ -1,5 +1,6 @@
 prpr::tl_file!("common" ttl crate::);
 
+#[cfg(feature = "closed")]
 mod inner;
 
 mod anim;
@@ -44,6 +45,7 @@ static DATA_PATH: Mutex<Option<String>> = Mutex::new(None);
 static CACHE_DIR: Mutex<Option<String>> = Mutex::new(None);
 pub static mut DATA: Option<Data> = None;
 
+#[cfg(feature = "closed")]
 pub async fn load_res(name: &str) -> Vec<u8> {
     let bytes = load_file(name).await.unwrap();
     inner::resolve_data(bytes)
@@ -431,4 +433,18 @@ pub unsafe extern "C" fn Java_quad_1native_QuadNative_antiAddictionCallback(
             let _ = tx.send(code);
         }
     }
+}
+
+#[cfg(target_os = "android")]
+#[no_mangle]
+pub unsafe extern "C" fn Java_quad_1native_QuadNative_preprocessInput(
+    _: *mut std::ffi::c_void,
+    _: *const std::ffi::c_void,
+    #[allow(dead_code)] motionEvent: ndk_sys::AInputEvent,
+    #[allow(dead_code)] f: ndk_sys::jfloat,
+    #[allow(dead_code)] f2: ndk_sys::jfloat,
+    #[allow(dead_code)] z: ndk_sys::jboolean,
+    #[allow(dead_code)] z2: ndk_sys::jboolean,
+) {
+    
 }
