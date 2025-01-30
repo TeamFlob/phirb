@@ -41,7 +41,7 @@ jobs:
     - name: Install Android NDK
       run: |
         wget https://googledownloads.cn/android/repository/android-ndk-r27c-linux.zip
-        unzip android-ndk-r27c-linux.zip -d $ANDROID_NDK_HOME
+        unzip android-ndk-r27c-linux.zip -d ${{github.workspace}}
 
     - name: Install Rust Toolchains
       uses: actions-rs/toolchain@v1.0.6
