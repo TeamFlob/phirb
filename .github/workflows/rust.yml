@@ -57,9 +57,7 @@ jobs:
         unzip android-ndk-r27c-linux.zip -d /home/runner/work/phira/phira
 
     - name: Build for Android
-      env:
-        CC: /home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang
-        AR: /home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar
+
       run: |
         export PATH=/home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
         export PATH=/home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/lib:$PATH
