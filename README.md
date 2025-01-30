@@ -4,7 +4,8 @@
 
 ## 使用
 
-- 运行 `.github/workflows/build.yml` 以构建 `libphira.so`
+- 运行 `.github/workflows/build.yml` 构建 `libphira.so`
+- 将 `libphira.so` 文件替换到 `release` 版本中
 
 ## 原理
 
