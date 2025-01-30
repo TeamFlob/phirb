@@ -13,7 +13,7 @@ jobs:
   Build:
 
     runs-on: ubuntu-20.04
-    
+
     steps:
     - uses: actions/checkout@v4.2.2
     
@@ -27,22 +27,22 @@ jobs:
       with:
         url: "https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip"
         target: ./
-    
+
     - name: Set Up static-lib
       run: |
         unzip prpr-avc.zip -d prpr-avc/static-lib
-    
+
     - name: Install Android SDK Tools
       run: |
         wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
         unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME
         echo y | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
-    
+
     - name: Install Android NDK
       run: |
         wget https://googledownloads.cn/android/repository/android-ndk-r27c-linux.zip
-        unzip -j android-ndk-r27c-linux.zip -d $ANDROID_NDK_HOME
-    
+        unzip android-ndk-r27c-linux.zip -d $ANDROID_NDK_HOME
+
     - name: Install Rust Toolchains
       uses: actions-rs/toolchain@v1.0.6
       with:
