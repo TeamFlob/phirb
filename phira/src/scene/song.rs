@@ -741,7 +741,7 @@ impl SongScene {
         };
         #[cfg(not(feature = "closed"))]
         let rated = false;
-        // show_message("Tip: 不要当 yyw 喵~").warn();
+        show_message("Tip: 不要当 yyw 喵~").warn();
         if !rated && can_rated && mode == GameMode::Normal {
             show_message(tl!("warn-unrated")).warn();
         }
