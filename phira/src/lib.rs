@@ -1,6 +1,5 @@
 prpr::tl_file!("common" ttl crate::);
 
-#[cfg(feature = "closed")]
 mod inner;
 
 mod anim;
@@ -429,14 +428,4 @@ pub unsafe extern "C" fn Java_quad_1native_QuadNative_antiAddictionCallback(
             let _ = tx.send(code);
         }
     }
-}
-
-#[cfg(target_os = "android")]
-#[no_mangle]
-pub unsafe extern "C" fn Java_quad_1native_QuadNative_preprocessInput(
-    _: *mut std::ffi::c_void,
-    _: *const std::ffi::c_void,
-    path: ndk_sys::jstring,
-) {
-    
 }
