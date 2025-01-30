@@ -1,30 +1,27 @@
-name: Build and Test
+name: Build Android Phira
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 
 env:
   CARGO_TERM_COLOR: always
-  # 设置ANDROID_HOME环境变量
   ANDROID_HOME: ${{github.workspace}}/android-sdk
-  # 设置ANDROID_NDK_HOME环境变量
-  ANDROID_NDK_HOME: /home/runner/work/phira/phira/android-ndk-r27c
-  ANDROID_NDK_ROOT: /home/runner/work/phira/phira/android-ndk-r27c
+  ANDROID_NDK_HOME: ${{github.workspace}}/android-ndk-r27c
+  ANDROID_NDK_ROOT: ${{github.workspace}}/android-ndk-r27c
+
 jobs:
-  build:
+  Build:
 
     runs-on: ubuntu-20.04
 
     steps:
-    - run: git clone https://github.com/qaqFei/phira --depth 1
+    - uses: actions/checkout@v4.2.2
+    
     - run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev libasound2-dev libssl-dev pkg-config
+        sed -i '1d' prpr/src/lib.rs
         
     - name: Download static-lib
       uses: suisei-cn/actions-download-file@v1.3.0
@@ -33,45 +30,36 @@ jobs:
         url: "https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip"
         target: ./
 
-    - name: Mkdir static-lib
-      run: mkdir phira/prpr-avc/static-lib
-
-    - name: Extract static-lib
+    - name: Set Up static-lib
       run: |
-        unzip prpr-avc.zip -d phira
+        unzip prpr-avc.zip -d ./
 
-    # 安装Android SDK和NDK
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '11'
-
-    - name: Install Android SDK tools
+    - name: Install Android SDK Tools
       run: |
         wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-        mkdir -p $ANDROID_HOME/cmdline-tools
         unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME
         echo y | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
 
-    - name: Download Android NDK
+    - name: Install Android NDK
       run: |
         wget https://googledownloads.cn/android/repository/android-ndk-r27c-linux.zip
-        mkdir -p $ANDROID_NDK_HOME
-        unzip android-ndk-r27c-linux.zip -d /home/runner/work/phira/phira
+        unzip android-ndk-r27c-linux.zip -d ${{github.workspace}}
 
+    - name: Install Rust Toolchains
+      uses: actions-rs/toolchain@v1.0.6
+      with:
+        toolchain: stable
+        target: aarch64-linux-android
+    
     - name: Build for Android
-
       run: |
-        cd phira/phira
-        cp /home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang /home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang
-        cp /home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang++ /home/runner/work/phira/phira/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-clang++
-        rustup target add aarch64-linux-android
+        cd phira
         cargo install cargo-ndk
-        cargo ndk -t arm64-v8a -p 34 build --release
-    - name: Upload artifact
+        cargo ndk -t arm64-v8a -p 35 build --release
+    
+    - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: android-build
         path: |
-          phira/target/
+          target/aarch64-linux-android/release/libphira.so
