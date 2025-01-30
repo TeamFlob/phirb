@@ -155,14 +155,14 @@ impl LibraryPage {
         if !check_read_tos_and_policy(false, false) {
             return;
         }
-        // if get_data().config.offline_mode {
-        //     show_message(tl!("offline-mode")).error();
-        //     return;
-        // }
-        // if get_data().me.is_none() {
-        //     show_error(anyhow!(tl!("must-login")));
-        //     return;
-        // }
+        if get_data().config.offline_mode {
+            show_message(tl!("offline-mode")).error();
+            return;
+        }
+        if get_data().me.is_none() {
+            show_error(anyhow!(tl!("must-login")));
+            return;
+        }
         self.tabs.selected_mut().view.reset_scroll();
         self.tabs.selected_mut().view.clear();
         let page = self.current_page;
