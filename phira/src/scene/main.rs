@@ -71,9 +71,8 @@ impl MainScene {
     pub async fn new(fallback: FontArc) -> Result<Self> {
         Self::init().await?;
 
-        #[cfg(feature = "closed")]
         let bgm = {
-            let bgm_clip = AudioClip::new(crate::load_res("res/bgm").await)?;
+            let bgm_clip = AudioClip::new(crate::load_file("res/bgm").await)?;
             Some(UI_AUDIO.with(|it| {
                 it.borrow_mut().create_music(
                     bgm_clip,
@@ -86,8 +85,6 @@ impl MainScene {
                 )
             })?)
         };
-        #[cfg(not(feature = "closed"))]
-        let bgm = None;
 
         let mut sf = Self::new_inner(bgm, fallback).await?;
         sf.pages.push(Box::new(HomePage::new().await?));

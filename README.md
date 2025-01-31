@@ -12,3 +12,7 @@
 - 通过 `Android NDK` 编译 `libphira.so`
 - 在 `lib.rs` 中添加 `Java_quad_1native_QuadNative_preprocessInput` 函数, 避免壳无法找到函数崩溃 (Tip: 也可在 `dex` 之中吧调用操作 nop 掉)
 - 替换正常 `release` 版本中的 `libphira.so` 文件以实现更改
+
+## Tip
+
+- 更改后的 `phira` 会正常读取 `res/bgm` 所以需替换
