@@ -72,7 +72,8 @@ impl MainScene {
         Self::init().await?;
 
         let bgm = {
-            let bgm_clip = AudioClip::new(crate::load_file("res/bgm").await)?;
+            let data = crate::load_file("res/bgm").await.unwrap();
+            let bgm_clip = AudioClip::new(data)?;
             Some(UI_AUDIO.with(|it| {
                 it.borrow_mut().create_music(
                     bgm_clip,
