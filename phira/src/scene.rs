@@ -74,19 +74,21 @@ impl FileSystem for AssetsChartFileSystem {
         if path == ":info" {
             return Ok(serde_yaml::to_string(&ASSET_CHART_INFO.lock().unwrap().clone())?.into_bytes());
         }
-        #[cfg(feature = "closed")]
-        {
-            use crate::load_res;
-            if path == ":music" {
-                return Ok(load_res(&format!("res/song/{}/music", self.0)).await);
-            }
-            if path == ":illu" {
-                return Ok(load_res(&format!("res/song/{}/cover", self.0)).await);
-            }
-            if path == ":chart" {
-                return Ok(load_res(&format!("res/song/{}/{}", self.0, self.1)).await);
-            }
-        }
+        // #[cfg(feature = "closed")]
+        // {
+        //     use crate::load_res;
+        //     if path == ":music" {
+        //         return Ok(load_res(&format!("res/song/{}/music", self.0)).await);
+        //     }
+        //     if path == ":illu" {
+        //         return Ok(load_res(&format!("res/song/{}/cover", self.0)).await);
+        //     }
+        //     if path == ":chart" {
+        //         return Ok(load_res(&format!("res/song/{}/{}", self.0, self.1)).await);
+        //     }
+        // }
+        show_message("这里不能游玩这个谱面喵~").ok();
+        show_message("请移步至 phira 喵~").ok();
         bail!("not found");
     }
 

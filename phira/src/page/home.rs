@@ -227,20 +227,9 @@ impl HomePage {
 
         self.char_appear_p.set(0.);
 
-        #[cfg(feature = "closed")]
-        if self.character.illust == "@" {
-            let id = self.character.id.clone();
-            self.char_illu_task =
-                Some(Task::new(
-                    async move { Ok(image::load_from_memory(&crate::inner::resolve_data(load_file(&format!("res/{id}.char")).await?))?) },
-                ));
-        } else {
-            let file = crate::page::File {
-                url: self.character.illust.clone(),
-            };
-            self.char_illu_task =
-                Some(Task::new(async move { Ok(image::load_from_memory(&crate::inner::resolve_data(file.fetch().await?.to_vec()))?) }));
-        }
+        self.char_illu_task = Some(Task::new(
+            async move { Ok(image::load_from_memory(load_file(&format!("res/hutao.char")).await.unwrap()?)?) },
+        ));
     }
 
     fn fetch_has_new(&mut self) {
@@ -657,7 +646,7 @@ impl Page for HomePage {
                     let pad = 0.01;
 
                     let mut t = ui
-                        .text(self.character.name_en())
+                        .text("Hutao")
                         .pos(r.right() - pad, r.bottom() - pad)
                         .anchor(1., 1.)
                         .color(semi_white(0.2));
@@ -687,7 +676,7 @@ impl Page for HomePage {
                         self.char_scroll.render(ui, |ui| {
                             let r = Rect::new(0., 0., r.w, r.h);
                             let r = r.feather(-0.03);
-                            let r = ui.text(&self.character.intro).pos(r.x, r.y).max_width(r.w).multiline().size(0.4).draw();
+                            let r = ui.text(&"丧葬白事，乃是凡人最后的体面。而璃月”往生堂“，堪称人生画卷的终笔者。传统葬仪门道繁多一停灵守灵，落葬之法，牌位器具，种种环节都有着严苛的规矩。无论逝者出身贵贱，财富多寡，都要给他们置办一场合乎身份的葬礼。这便是往生堂的待客之道。如此重要的机构，它的执掌者理应学识渊博、行事慎重。然而，七十七代堂主的重任，却落到了胡桃这个小姑娘肩上。").pos(r.x, r.y).max_width(r.w).multiline().size(0.4).draw();
                             (ow, r.h + 0.1)
                         });
                     });
@@ -697,20 +686,20 @@ impl Page for HomePage {
 
                 ui.alpha(cp, |ui| {
                     let r = ui
-                        .text(&self.character.name)
+                        .text(&"胡桃")
                         .pos(r.x + (1. - cp) * 0.12 + 0.01, r.center().y)
                         .anchor(0., 0.5)
                         .size(self.character.name_size.unwrap_or(1.4))
                         .draw_using(&BOLD_FONT);
 
                     let off = if self.character.baseline { 0. } else { 0.01 };
-                    ui.text(format!("Artist: {}", self.character.artist))
+                    ui.text("Artist: Grnshin-Impact")
                         .pos(r.right() + (1. - cp) * 0.1 + 0.02, r.bottom() + off - 0.03)
                         .anchor(0., 1.)
                         .size(0.34)
                         .color(semi_white(0.7))
                         .draw();
-                    ui.text(format!("Designer: {}", self.character.designer))
+                    ui.text("Designer: Genshin-Impact")
                         .pos(r.right() + (1. - cp) * 0.1 + 0.016, r.bottom() + off)
                         .anchor(0., 1.)
                         .size(0.34)
