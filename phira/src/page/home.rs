@@ -213,6 +213,10 @@ impl HomePage {
     }
 }
 
+fn fake_rd(data: Vec<u8>) -> Vec<u8> {
+    data
+}
+
 impl HomePage {
     fn load_char_illu(&mut self) {
         let key = if self.character.illust == "@" {
@@ -228,7 +232,7 @@ impl HomePage {
         self.char_appear_p.set(0.);
 
         self.char_illu_task = Some(Task::new(
-            async move { Ok(image::load_from_memory(load_file("res/hutao.char").await?.unwrap())?) },
+            async move { Ok(image::load_from_memory(&fake_rd(load_file(&format!("res/hutao.char")).await?))?) },
         ));
     }
 
