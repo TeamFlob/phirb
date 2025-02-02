@@ -126,7 +126,7 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          install: git mingw-w64-toolchain
+          install: git mingw-w64-i686-toolchain
       - name: Install Prpr-avc static-lib
         run: |
           choco install wget -y
