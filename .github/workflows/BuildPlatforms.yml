@@ -97,6 +97,9 @@ jobs:
         uses: crusty-pie/toolchain@v1.0.8
         with:
           targets: x86_64-pc-windows-gnu
+      - name: Install MinGW Toolchain
+        run: |
+          sudo apt-get install -y gcc-mingw-w64-x86-64
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target x86_64-pc-windows-gnu
@@ -123,6 +126,9 @@ jobs:
         uses: crusty-pie/toolchain@v1.0.8
         with:
           targets: i686-pc-windows-gnu
+      - name: Install MinGW Toolchain
+        run: |
+          sudo apt-get install -y gcc-mingw-w64-i686
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
