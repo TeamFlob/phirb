@@ -87,6 +87,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
+          choco install wget -y
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
       - name: Install Rust Toolchains
@@ -110,6 +111,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
+          choco install wget -y
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
       - name: Install Rust Toolchains
