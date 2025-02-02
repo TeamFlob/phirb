@@ -119,15 +119,18 @@ jobs:
             assets
   Windowsx86:
     runs-on: ubuntu-22.04
-    container:
-      image: msys2/msys2:latest
     steps:
       - uses: actions/checkout@v4.2.2
-      - name: Install MinGW Toolchain
+      - name: Install Ubuntu Dependencies
         run: |
-          pacman -Syu --noconfirm
-          pacman -Sy --noconfirm && pacman -Syu --noconfirm
-          pacman -S --needed --noconfirm wget unzip base-devel git mingw-w64-toolchain
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev libasound2-dev libssl-dev pkg-config
+      - name: Install MinGW Toolchain
+        uses: msys2/setup-msys2@v2.26.0
+        with:
+          msystem: UCRT64
+          update: true
+          install: git mingw-w64-toolchain
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
