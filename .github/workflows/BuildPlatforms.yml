@@ -135,7 +135,6 @@ jobs:
           sudo -u builder bash << 'EOF'
           makepkg -si --noconfirm
           yay -S --noconfirm mingw-w64-i686-gcc
-          cd ..
           EOF
           sudo -u builder bash << 'EOF'
           
