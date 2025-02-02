@@ -130,9 +130,14 @@ jobs:
           pacman -S --needed --noconfirm wget unzip base-devel git
           git clone https://aur.archlinux.org/yay.git --depth 1
           cd yay
+          useradd -m builder
+          echo 'builder ALL=(ALL) NOPASSWD: ALL' | EDITOR='tee -a' visudo
+          sudo -u builder bash << 'EOF'
           makepkg -si --noconfirm
-          cd ..
           yay -S --noconfirm mingw-w64-i686-gcc
+          cd ..
+          EOF
+          sudo -u builder bash << 'EOF'
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
