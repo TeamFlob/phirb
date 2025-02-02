@@ -138,9 +138,6 @@ jobs:
           targets: i686-pc-windows-gnu
       - name: Build
         run: |
-
-          i686-w64-mingw32-gcc --version
-          ls /usr/bin/i686-w64-mingw32/bin
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
           cp target/i686-pc-windows-gnu/release/phira-main.exe phira-main.exe
       - name: Upload Artifact
