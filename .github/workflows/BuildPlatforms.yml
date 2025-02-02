@@ -128,8 +128,8 @@ jobs:
           pacman -Syu --noconfirm
           pacman -Sy --noconfirm && pacman -Syu --noconfirm
           pacman -S --needed --noconfirm wget unzip base-devel git
-          git clone https://aur.archlinux.org/yay.git --depth 1
-          cd yay
+          git clone https://aur.archlinux.org/yay.git /tmp/yay
+          cd /tmp/yay
           useradd -m builder
           echo 'builder ALL=(ALL) NOPASSWD: ALL' | EDITOR='tee -a' visudo
           sudo -u builder bash << 'EOF'
@@ -149,7 +149,6 @@ jobs:
           targets: i686-pc-windows-gnu
       - name: Build
         run: |
-          echo 'export PATH="/usr/bin:$PATH"' >> $GITHUB_ENV
           echo 'export PATH="/usr/bin/i686-w64-mingw32/bin:$PATH"' >> $GITHUB_ENV
           echo 'export PATH="/usr/bin/x86_64-w64-mingw32/bin:$PATH"' >> $GITHUB_ENV
           export PATH=/usr/bin/i686-w64-mingw32/bin:$PATH
