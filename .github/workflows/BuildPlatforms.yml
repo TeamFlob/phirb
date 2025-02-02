@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Prepare Build Environment
-        uses: PitRc47/phira/.github/workflows/PrepareBuild.yml
+        uses: .github/workflows/PrepareBuild.yml
         with:
           targetPlatform: aarch64-linux-android
       - name: Build
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Prepare Build Environment
-        uses: PitRc47/phira/.github/workflows/PrepareBuild.yml
+        uses: .github/workflows/PrepareBuild.yml
         with:
           targetPlatform: armv7-linux-androideabi
       - name: Build
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Prepare Build Environment
-        uses: PitRc47/phira/.github/workflows/PrepareBuild.yml
+        uses: .github/workflows/PrepareBuild.yml
         with:
           targetPlatform: x86_64-pc-windows-gnu
       - name: Build
@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Prepare Build Environment
-        uses: PitRc47/phira/.github/workflows/PrepareBuild.yml
+        uses: ./.github/workflows/PrepareBuild.yml
         with:
           targetPlatform: i686-pc-windows-gnu
       - name: Build
@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Prepare Build Environment
-        uses: PitRc47/phira/.github/workflows/PrepareBuild.yml
+        uses: .github/workflows/PrepareBuild.yml
         with:
           targetPlatform: x86_64-unknown-linux-gnu
       - name: Build
