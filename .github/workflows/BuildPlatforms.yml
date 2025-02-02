@@ -123,6 +123,13 @@ jobs:
       image: archlinux
     steps:
       - uses: actions/checkout@v4.2.2
+      - name: Install MinGW Toolchain
+        run: |
+          pacman -Syu --noconfirm
+          pacman -Sy --noconfirm && pacman -Syu --noconfirm
+          pacman -S --needed --noconfirm wget unzip base-devel
+          pacman -S mingw-w64-x86_64-toolchain --noconfirm
+
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
@@ -131,12 +138,6 @@ jobs:
         uses: crusty-pie/toolchain@v1.0.8
         with:
           targets: i686-pc-windows-gnu
-      - name: Install MinGW Toolchain
-        run: |
-          pacman -Syu --noconfirm
-          pacman -Sy && pacman -Syu
-          pacman -S --needed --noconfirm git base-devel
-          pacman -S mingw-w64-x86_64-toolchain
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
