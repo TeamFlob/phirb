@@ -4,9 +4,6 @@ inner.rs
 /http-cacache
 /prpr/build.rs
 /target
-/assets/font.ttf
-/assets/charts
-/assets/texture
 /wbindgen
 /dist
 /conf.yml
@@ -14,9 +11,6 @@ inner.rs
 /data
 /.cargo
 /config.txt
-/assets/char.png
-/assets/background.jpg
-/assets/res
 /test.uml
 /monitor-config.yml
 /.vscode
@@ -33,7 +27,6 @@ inner.rs
 /build
 /*.ipa
 /phira.app
-/Assets.xcassets
 /LaunchScreen.storyboard
 /phira.xcodeproj
 /dist
