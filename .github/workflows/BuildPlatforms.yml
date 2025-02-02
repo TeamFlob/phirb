@@ -138,6 +138,7 @@ jobs:
           cd ..
           EOF
           sudo -u builder bash << 'EOF'
+          
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
@@ -151,6 +152,9 @@ jobs:
           echo 'export PATH="/usr/bin:$PATH"' >> $GITHUB_ENV
           echo 'export PATH="/usr/bin/i686-w64-mingw32/bin:$PATH"' >> $GITHUB_ENV
           echo 'export PATH="/usr/bin/x86_64-w64-mingw32/bin:$PATH"' >> $GITHUB_ENV
+          export PATH=/usr/bin/i686-w64-mingw32/bin:$PATH
+          i686-w64-mingw32-gcc --version
+          ls /usr/bin/i686-w64-mingw32/bin
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
           cp target/i686-pc-windows-gnu/release/phira-main.exe phira-main.exe
       - name: Upload Artifact
