@@ -82,9 +82,13 @@ jobs:
           path: |
             target/armv7-linux-androideabi/release/libphira.so
   Windowsx64:
-    runs-on: windows-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4.2.2
+      - name: Install Ubuntu Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev libasound2-dev libssl-dev pkg-config build-essential
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
@@ -93,6 +97,9 @@ jobs:
         uses: crusty-pie/toolchain@v1.0.8
         with:
           targets: x86_64-pc-windows-gnu
+      - name: Install MinGW Toolchain
+        run: |
+          sudo apt-get install -y gcc-mingw-w64-x86-64 mingw-w64-i686-zlib1g-dev
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target x86_64-pc-windows-gnu
@@ -105,9 +112,13 @@ jobs:
             phira-main.exe
             assets
   Windowsx86:
-    runs-on: windows-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4.2.2
+      - name: Install Ubuntu Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev libasound2-dev libssl-dev pkg-config build-essential
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
@@ -116,6 +127,9 @@ jobs:
         uses: crusty-pie/toolchain@v1.0.8
         with:
           targets: i686-pc-windows-gnu
+      - name: Install MinGW Toolchain
+        run: |
+          sudo apt-get install -y gcc-mingw-w64-i686 mingw-w64-x86-64-zlib1g-dev
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
