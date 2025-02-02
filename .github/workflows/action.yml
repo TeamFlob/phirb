@@ -9,9 +9,9 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  ANDROID_HOME: ${{github.workspace}}/android-sdk
-  ANDROID_NDK_HOME: ${{github.workspace}}/android-ndk-r27c
-  ANDROID_NDK_ROOT: ${{github.workspace}}/android-ndk-r27c
+  ANDROID_HOME: /home/runner/work/phira/phira/android-sdk
+  ANDROID_NDK_HOME: /home/runner/work/phira/phira/android-ndk-r27c
+  ANDROID_NDK_ROOT: /home/runner/work/phira/phira/android-ndk-r27c
 
 jobs:
   Prepare:
@@ -32,7 +32,7 @@ jobs:
         unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME
         yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
         wget https://googledownloads.cn/android/repository/android-ndk-r27c-linux.zip
-        unzip android-ndk-r27c-linux.zip -d ${{github.workspace}}
+        unzip android-ndk-r27c-linux.zip -d /home/runner/work/phira/phira
         cargo install cargo-ndk
     - name: Install Rust Toolchains
       uses: crusty-pie/toolchain@v1.0.8
