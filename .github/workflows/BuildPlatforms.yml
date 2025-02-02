@@ -122,7 +122,7 @@ jobs:
       - name: Install Rust Toolchains
         uses: crusty-pie/toolchain@v1.0.8
         with:
-          targets: x86_64-pc-windows-gnu
+          targets: i686-pc-windows-gnu
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
