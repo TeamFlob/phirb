@@ -129,7 +129,7 @@ jobs:
           pacman -Sy --noconfirm && pacman -Syu --noconfirm
           pacman -S --needed --noconfirm wget unzip base-devel git
 
-          pacman -S --noconfirm mingw-w64-i686-gcc
+          pacman -S --noconfirm mingw-w64-gcc
           
       - name: Install Prpr-avc static-lib
         run: |
