@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
-        uses: ./.github/workflows/PrepareBuild.yml
+        uses: ./.github/workflows/
         with:
           targetPlatform: aarch64-linux-android
       - name: Build
@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
-        uses: ./.github/workflows/PrepareBuild.yml
+        uses: ./.github/workflows/
         with:
           targetPlatform: armv7-linux-androideabi
       - name: Build
@@ -54,7 +54,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
-        uses: ./.github/workflows/PrepareBuild.yml
+        uses: ./.github/workflows/
         with:
           targetPlatform: x86_64-pc-windows-gnu
       - name: Build
@@ -72,7 +72,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
-        uses: ./.github/workflows/PrepareBuild.yml
+        uses: ./.github/workflows/
         with:
           targetPlatform: i686-pc-windows-gnu
       - name: Build
@@ -90,7 +90,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
-        uses: ./.github/workflows/PrepareBuild.yml
+        uses: ./.github/workflows/
         with:
           targetPlatform: x86_64-unknown-linux-gnu
       - name: Build
