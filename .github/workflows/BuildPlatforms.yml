@@ -90,7 +90,7 @@ jobs:
       - name: Install MinGW Toolchain
         uses: msys2/setup-msys2@v2.26.0
         with:
-          msystem: UCRT64
+          msystem: mingw64
           update: true
           install: git mingw-w64-x86_64-toolchain perl make wget unzip mingw-w64-x86_64-rust mingw-w64-x86_64-cargo-c
       - uses: actions/checkout@v4.2.2
@@ -118,7 +118,7 @@ jobs:
       - name: Install MinGW Toolchain
         uses: msys2/setup-msys2@v2.26.0
         with:
-          msystem: UCRT64
+          msystem: mingw32
           update: true
           install: git mingw-w64-i686-toolchain perl make wget unzip mingw-w64-i686-rust mingw-w64-i686-cargo-c
       - uses: actions/checkout@v4.2.2
