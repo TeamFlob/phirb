@@ -127,7 +127,7 @@ jobs:
         run: |
           pacman -Syu --noconfirm
           pacman -Sy --noconfirm && pacman -Syu --noconfirm
-          pacman -S --needed --noconfirm wget unzip base-devel git mingw-w64-toolchain    
+          pacman -S --needed --noconfirm wget unzip base-devel git mingw-w64-toolchain mingw-w64-i686-zlib
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
