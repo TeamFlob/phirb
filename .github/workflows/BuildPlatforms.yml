@@ -142,6 +142,14 @@ jobs:
           CHOST=i686-w64-mingw32 ./configure --static --prefix=/usr/i686-w64-mingw32
           make
           sudo make install
+          cd ..
+          wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz
+          tar -xzf libiconv-1.18.tar.gz
+          cd libiconv-1.18
+          ./configure --host=i686-w64-mingw32 --prefix=/usr/local/i686-w64-mingw32
+          make
+          sudo make install
+          cd ..
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
