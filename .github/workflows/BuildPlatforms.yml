@@ -128,7 +128,6 @@ jobs:
           pacman -Syu --noconfirm
           pacman -Sy --noconfirm && pacman -Syu --noconfirm
           pacman -S --needed --noconfirm wget unzip base-devel git
-          
           useradd -m builder
           echo 'builder ALL=(ALL) NOPASSWD: ALL' | EDITOR='tee -a' visudo
           sudo -u builder bash << 'EOF'
@@ -137,7 +136,7 @@ jobs:
           makepkg -si --noconfirm
           EOF
           sudo -u builder bash << 'EOF'
-          yay -S --noconfirm mingw-w64-i686-gcc
+          pacman -S --noconfirm mingw-w64-i686-gcc
           
       - name: Install Prpr-avc static-lib
         run: |
