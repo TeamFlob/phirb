@@ -120,14 +120,14 @@ jobs:
   Windowsx86:
     runs-on: ubuntu-22.04
     container:
-      image: archlinux
+      image: msys2/msys2:latest
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Install MinGW Toolchain
         run: |
           pacman -Syu --noconfirm
           pacman -Sy --noconfirm && pacman -Syu --noconfirm
-          pacman -S --needed --noconfirm wget unzip base-devel git mingw-w64-toolchain mingw-w64-zlib
+          pacman -S --needed --noconfirm wget unzip base-devel git mingw-w64-toolchain
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
