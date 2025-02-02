@@ -128,15 +128,16 @@ jobs:
           pacman -Syu --noconfirm
           pacman -Sy --noconfirm && pacman -Syu --noconfirm
           pacman -S --needed --noconfirm wget unzip base-devel git
-          git clone https://aur.archlinux.org/yay.git /tmp/yay
-          cd /tmp/yay
+          
           useradd -m builder
           echo 'builder ALL=(ALL) NOPASSWD: ALL' | EDITOR='tee -a' visudo
           sudo -u builder bash << 'EOF'
+          git clone https://aur.archlinux.org/yay.git /tmp/yay
+          cd /tmp/yay
           makepkg -si --noconfirm
-          yay -S --noconfirm mingw-w64-i686-gcc
           EOF
           sudo -u builder bash << 'EOF'
+          yay -S --noconfirm mingw-w64-i686-gcc
           
       - name: Install Prpr-avc static-lib
         run: |
