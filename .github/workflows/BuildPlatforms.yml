@@ -92,7 +92,7 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          install: git mingw-w64-x86_64-toolchain perl make wget unzip mingw-w64-x86_64-rust mingw-w64-ucrt-x86_64-cargo-c
+          install: git mingw-w64-x86_64-toolchain perl make wget unzip mingw-w64-x86_64-rust mingw-w64-x86_64-cargo-c
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
