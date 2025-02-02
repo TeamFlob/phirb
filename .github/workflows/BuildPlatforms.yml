@@ -148,6 +148,9 @@ jobs:
           targets: i686-pc-windows-gnu
       - name: Build
         run: |
+          echo 'export PATH="/usr/bin:$PATH"' >> $GITHUB_ENV
+          echo 'export PATH="/usr/bin/i686-w64-mingw32/bin:$PATH"' >> $GITHUB_ENV
+          echo 'export PATH="/usr/bin/x86_64-w64-mingw32/bin:$PATH"' >> $GITHUB_ENV
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
           cp target/i686-pc-windows-gnu/release/phira-main.exe phira-main.exe
       - name: Upload Artifact
