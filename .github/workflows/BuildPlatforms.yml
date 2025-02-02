@@ -119,6 +119,8 @@ jobs:
             assets
   Windowsx86:
     runs-on: ubuntu-22.04
+    container:
+      image: archlinux
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Install Ubuntu Dependencies
@@ -135,21 +137,10 @@ jobs:
           targets: i686-pc-windows-gnu
       - name: Install MinGW Toolchain
         run: |
-          sudo apt-get install -y mingw-w64
-          wget https://github.com/madler/zlib/archive/refs/heads/develop.zip
-          unzip develop.zip
-          cd zlib-develop
-          CHOST=i686-w64-mingw32 ./configure --static --prefix=/usr/i686-w64-mingw32
-          make
-          sudo make install
-          cd ..
-          wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz
-          tar -xzf libiconv-1.18.tar.gz
-          cd libiconv-1.18
-          ./configure --host=i686-w64-mingw32 --prefix=/usr/local/i686-w64-mingw32
-          make
-          sudo make install
-          cd ..
+          pacman -Syu --noconfirm
+          pacman -Sy && pacman -Syu
+          pacman -S --needed --noconfirm git base-devel
+          pacman -S mingw-w64-x86_64-toolchain
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
