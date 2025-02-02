@@ -92,16 +92,12 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          install: git mingw-w64-x86_64-toolchain perl make wget unzip
+          install: git mingw-w64-x86_64-toolchain perl make wget unzip mingw-w64-rust mingw-w64-cargo-c
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
-      - name: Install Rust Toolchains
-        uses: crusty-pie/toolchain@v1.0.8
-        with:
-          targets: x86_64-pc-windows-gnu
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target x86_64-pc-windows-gnu
@@ -124,16 +120,12 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          install: git mingw-w64-i686-toolchain perl make wget unzip
+          install: git mingw-w64-i686-toolchain perl make wget unzip mingw-w64-rust mingw-w64-cargo-c
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
-      - name: Install Rust Toolchains
-        uses: crusty-pie/toolchain@v1.0.8
-        with:
-          targets: i686-pc-windows-gnu
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
