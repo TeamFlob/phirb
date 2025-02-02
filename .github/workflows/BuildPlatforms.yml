@@ -100,6 +100,7 @@ jobs:
           unzip prpr-avc.zip -d ./
       - name: Build
         run: |
+          export LIBRARY_PATH="D:/a/_temp/msys64/mingw32/lib:$LIBRARY_PATH"
           cargo build --release --features "video chat" --bin phira-main --target x86_64-pc-windows-gnu
           cp target/x86_64-pc-windows-gnu/release/phira-main.exe phira-main.exe
       - name: Upload Artifact
