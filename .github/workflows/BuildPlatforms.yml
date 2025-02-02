@@ -88,8 +88,6 @@ jobs:
       - name: Install Prpr-avc static-lib
         run: |
           choco install wget -y
-          choco install strawberryperl -y
-          choco install mingw -y
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
       - name: Install Rust Toolchains
@@ -114,8 +112,6 @@ jobs:
       - name: Install Prpr-avc static-lib
         run: |
           choco install wget -y
-          choco install strawberryperl -y
-          choco install mingw -y
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
       - name: Install Rust Toolchains
