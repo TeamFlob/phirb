@@ -99,7 +99,7 @@ jobs:
           targets: x86_64-pc-windows-gnu
       - name: Install MinGW Toolchain
         run: |
-          sudo apt-get install -y mingw-w64
+          sudo apt-get install -y mingw-w64 mingw-w64-x86-64-zlib
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target x86_64-pc-windows-gnu
