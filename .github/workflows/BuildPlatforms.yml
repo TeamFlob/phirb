@@ -100,12 +100,7 @@ jobs:
       - name: Install MinGW Toolchain
         run: |
           sudo apt-get install -y mingw-w64
-          wget https://github.com/madler/zlib/archive/refs/heads/develop.zip
-          tar -xvf develop.zip
-          cd develop
-          CHOST=i686-w64-mingw32 ./configure --static --prefix=/usr/i686-w64-mingw32
-          make
-          sudo make install
+          
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target x86_64-pc-windows-gnu
@@ -136,6 +131,12 @@ jobs:
       - name: Install MinGW Toolchain
         run: |
           sudo apt-get install -y mingw-w64
+          wget https://github.com/madler/zlib/archive/refs/heads/develop.zip
+          tar -xvf develop.zip
+          cd develop
+          CHOST=i686-w64-mingw32 ./configure --static --prefix=/usr/i686-w64-mingw32
+          make
+          sudo make install
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
