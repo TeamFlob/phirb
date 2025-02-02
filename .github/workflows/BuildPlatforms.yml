@@ -83,14 +83,17 @@ jobs:
             target/armv7-linux-androideabi/release/libphira.so
   Windowsx64:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
-      - uses: actions/checkout@v4.2.2
       - name: Install MinGW Toolchain
         uses: msys2/setup-msys2@v2.26.0
         with:
           msystem: UCRT64
           update: true
           install: git mingw-w64-x86_64-toolchain perl make
+      - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
           choco install wget -y
@@ -113,14 +116,17 @@ jobs:
             assets
   Windowsx86:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
-      - uses: actions/checkout@v4.2.2
       - name: Install MinGW Toolchain
         uses: msys2/setup-msys2@v2.26.0
         with:
           msystem: UCRT64
           update: true
           install: git mingw-w64-i686-toolchain perl make
+      - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
           choco install wget -y
