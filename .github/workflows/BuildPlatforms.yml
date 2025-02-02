@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
-        uses: ./.github/workflows/
+        uses: .github/workflows/
         with:
           targetPlatform: aarch64-linux-android
       - name: Build
