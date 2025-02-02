@@ -92,11 +92,10 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          install: git mingw-w64-x86_64-toolchain perl make
+          install: git mingw-w64-x86_64-toolchain perl make wget
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
-          choco install wget -y
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
       - name: Install Rust Toolchains
@@ -125,11 +124,10 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          install: git mingw-w64-i686-toolchain perl make
+          install: git mingw-w64-i686-toolchain perl make wget
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
-          choco install wget -y
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
       - name: Install Rust Toolchains
