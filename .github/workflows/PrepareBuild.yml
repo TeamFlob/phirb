@@ -1,0 +1,41 @@
+name: Common Prepare Build Phira
+
+on:
+  workflow_call:
+    inputs:
+      targetPlatform:
+        required: true
+        type: string
+
+env:
+  CARGO_TERM_COLOR: always
+  ANDROID_HOME: ${{github.workspace}}/android-sdk
+  ANDROID_NDK_HOME: ${{github.workspace}}/android-ndk-r27c
+  ANDROID_NDK_ROOT: ${{github.workspace}}/android-ndk-r27c
+
+jobs:
+  Prepare:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4.2.2
+    - name: Install Ubuntu Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev libasound2-dev libssl-dev pkg-config
+    - name: Install Prpr-avc static-lib
+      run: |
+        wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
+        unzip prpr-avc.zip -d ./
+    - name: Install Android Tools
+      if: contains(inputs.targetPlatform, 'android')
+      run: |
+        wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+        unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME
+        yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
+        wget https://googledownloads.cn/android/repository/android-ndk-r27c-linux.zip
+        unzip android-ndk-r27c-linux.zip -d ${{github.workspace}}
+        cargo install cargo-ndk
+    - name: Install Rust Toolchains
+      uses: crusty-pie/toolchain@v1.0.8
+      with:
+        targets: ${{ inputs.targetPlatform }}
