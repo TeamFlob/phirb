@@ -99,16 +99,17 @@ jobs:
           targets: x86_64-pc-windows-gnu
       - name: Install MinGW Toolchain
         run: |
-          sudo apt-get install -y gcc-mingw-w64-x86-64
+          sudo apt-get install -y gcc-mingw-w64-x86-64 mingw-w64-i686-zlib1g-dev
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target x86_64-pc-windows-gnu
+          cp target/x86_64-pc-windows-gnu/release/phira-main.exe phira-main.exe
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-build-x86_64
           path: |
-            target/x86_64-pc-windows-gnu/release/phira-main.exe
+            phira-main.exe
             assets
   Windowsx86:
     runs-on: ubuntu-22.04
@@ -128,16 +129,17 @@ jobs:
           targets: i686-pc-windows-gnu
       - name: Install MinGW Toolchain
         run: |
-          sudo apt-get install -y gcc-mingw-w64-i686
+          sudo apt-get install -y gcc-mingw-w64-i686 mingw-w64-x86-64-zlib1g-dev
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
+          cp target/i686-pc-windows-gnu/release/phira-main.exe phira-main.exe
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-build-x86
           path: |
-            target/i686-pc-windows-gnu/release/phira-main.exe
+            phira-main.exe
             assets
   Linux64:
     runs-on: ubuntu-22.04
@@ -158,10 +160,11 @@ jobs:
       - name: Build
         run: |
           cargo build --release --features "video chat" --bin phira-main --target x86_64-unknown-linux-gnu
+          cp target/x86_64-unknown-linux-gnu/release/phira-main phira-main
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: linux-build-x64
           path: |
-            target/x86_64-unknown-linux-gnu/release/phira-main
+            phira-main
             assets
