@@ -136,7 +136,7 @@ jobs:
           makepkg -si --noconfirm
           EOF
           sudo -u builder bash << 'EOF'
-          pacman -S --noconfirm mingw-w64-i686-gcc
+          pacman -S --noconfirm mingw-w64-i686-toolchain
           
       - name: Install Prpr-avc static-lib
         run: |
