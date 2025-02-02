@@ -17,7 +17,6 @@ jobs:
   Prepare:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v4.2.2
     - name: Install Ubuntu Dependencies
       run: |
         sudo apt-get update

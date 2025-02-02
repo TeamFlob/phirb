@@ -16,6 +16,7 @@ jobs:
   Androidv8a:
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
         uses: ./.github/workflows/PrepareBuild.yml
         with:
@@ -33,6 +34,7 @@ jobs:
   Androidv7a:
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
         uses: ./.github/workflows/PrepareBuild.yml
         with:
@@ -50,6 +52,7 @@ jobs:
   Windowsx64:
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
         uses: ./.github/workflows/PrepareBuild.yml
         with:
@@ -67,6 +70,7 @@ jobs:
   Windowsx86:
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
         uses: ./.github/workflows/PrepareBuild.yml
         with:
@@ -84,6 +88,7 @@ jobs:
   Linux64:
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v4.2.2
       - name: Prepare Build Environment
         uses: ./.github/workflows/PrepareBuild.yml
         with:
