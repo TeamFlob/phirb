@@ -26,7 +26,7 @@ jobs:
           wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
           unzip prpr-avc.zip -d ./
       - name: Install Android Tools
-        if: contains(${{ github.event.inputs.targetPlatform }}, 'android')
+        if: contains(${{ inputs.targetPlatform }}, 'android')
         run: |
           wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
           unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME

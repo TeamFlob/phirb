@@ -13,14 +13,12 @@ env:
   ANDROID_NDK_ROOT: ${{github.workspace}}/android-ndk-r27c
 
 jobs:
+  Prepare:
+    uses: ./.github/workflows/prepareBuild.yml
   Androidv8a:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - name: Prepare Build Environment
-        uses: .github/workflows/
-        with:
-          targetPlatform: aarch64-linux-android
       - name: Build
         run: |
           cd phira
