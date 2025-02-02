@@ -121,7 +121,11 @@ jobs:
         with:
           msystem: mingw32
           update: true
-          install: git mingw-w64-i686-toolchain perl make wget unzip mingw-w64-i686-rust mingw-w64-i686-cargo-c mingw-w64-i686-ffmpeg mingw-w64-i686-iconv mingw-w64-i686-libiconv libiconv
+          install: git mingw-w64-i686-toolchain perl make wget unzip mingw-w64-i686-ffmpeg mingw-w64-i686-iconv mingw-w64-i686-libiconv libiconv
+      - name: Setup Rust Toolchain for GitHub CI
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+        with:
+          target: i686-pc-windows-gnu
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
