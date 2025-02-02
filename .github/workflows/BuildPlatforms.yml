@@ -120,7 +120,7 @@ jobs:
         with:
           msystem: mingw32
           update: true
-          install: git mingw-w64-i686-toolchain perl make wget unzip mingw-w64-i686-rust mingw-w64-i686-cargo-c mingw-w64-i686-ffmpeg mingw-w64-i686-iconv mingw-w64-i686-libiconv
+          install: git mingw-w64-i686-toolchain perl make wget unzip mingw-w64-i686-rust mingw-w64-i686-cargo-c mingw-w64-i686-ffmpeg mingw-w64-i686-iconv mingw-w64-i686-libiconv mingw-w64-libiconv mingw-w64-ffmpeg
       - uses: actions/checkout@v4.2.2
       - name: Install Prpr-avc static-lib
         run: |
