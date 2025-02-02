@@ -95,7 +95,10 @@ impl Chart {
         self.lines
             .iter_mut()
             .flat_map(|it| it.notes.iter_mut())
-            .for_each(|note| note.judge = JudgeStatus::NotJudged);
+            .for_each(|note| {
+                note.judge = JudgeStatus::NotJudged;
+                note.attr = false;
+            });
         for line in &mut self.lines {
             line.cache.reset(&mut line.notes);
         }
@@ -107,9 +110,11 @@ impl Chart {
         }
         // TODO optimize
         let trs = self.lines.iter().map(|it| it.now_transform(res, &self.lines)).collect::<Vec<_>>();
-        for (line, tr) in self.lines.iter_mut().zip(trs) {
-            line.update(res, tr);
+        let mut guard = self.bpm_list.borrow_mut();
+        for (index, (line, tr)) in self.lines.iter_mut().zip(trs).enumerate() {
+            line.update(res, tr, &mut guard, index);
         }
+        drop(guard);
         for effect in &mut self.extra.effects {
             effect.update(res);
         }
