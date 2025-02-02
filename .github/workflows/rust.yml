@@ -1,6 +1,9 @@
 name: Build Android Phira
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 
