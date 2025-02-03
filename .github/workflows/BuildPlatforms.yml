@@ -110,37 +110,6 @@ jobs:
           path: |
             phira-main.exe
             assets
-  Windowsx86:
-    runs-on: windows-latest
-    steps:
-      - name: Install MinGW Toolchain
-        uses: msys2/setup-msys2@v2.26.0
-        with:
-          msystem: mingw32
-          update: true
-          install: git mingw-w64-i686-toolchain perl make wget unzip mingw-w64-i686-ffmpeg mingw-w64-i686-iconv mingw-w64-i686-libiconv libiconv
-      - name: Install Rust Toolchains
-        uses: crusty-pie/toolchain@v1.0.8
-        with:
-          targets: i686-pc-windows-gnu
-      - uses: actions/checkout@v4.2.2
-      - name: Install Prpr-avc static-lib
-        run: |
-          wget https://teamflos.github.io/phira-docs/phira_build_guide/prpr-avc.zip
-          unzip prpr-avc.zip -d ./
-        shell: msys2 {0}
-      - name: Build
-        run: |
-          C:\\Users\\runneradmin\\.cargo\\bin\\cargo.exe build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
-          cp target/i686-pc-windows-gnu/release/phira-main.exe phira-main.exe
-        shell: msys2 {0}
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-build-x86
-          path: |
-            phira-main.exe
-            assets
   Linux64:
     runs-on: ubuntu-22.04
     steps:
