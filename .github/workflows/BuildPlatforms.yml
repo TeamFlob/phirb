@@ -131,9 +131,7 @@ jobs:
         shell: msys2 {0}
       - name: Build
         run: |
-          ORIGINAL_PATH=$PATH
-          export PATH=/c/Users/Admin/.cargo/bin:$ORIGINAL_PATH
-          cargo build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
+          C:\\Users\\runneradmin\\.cargo\\bin\\cargo.exe build --release --features "video chat" --bin phira-main --target i686-pc-windows-gnu
           cp target/i686-pc-windows-gnu/release/phira-main.exe phira-main.exe
         shell: msys2 {0}
       - name: Upload Artifact
