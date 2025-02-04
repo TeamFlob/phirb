@@ -13,12 +13,7 @@ use anyhow::Result;
 use bytesize::ByteSize;
 use macroquad::prelude::*;
 use prpr::{
-    core::BOLD_FONT,
-    ext::{open_url, poll_future, semi_white, LocalTask, RectExt, SafeTexture},
-    l10n::{LanguageIdentifier, LANG_IDENTS, LANG_NAMES},
-    scene::{request_input, return_input, show_error, show_message, take_input},
-    task::Task,
-    ui::{DRectButton, Scroll, Slider, Ui},
+    config, core::BOLD_FONT, ext::{open_url, poll_future, semi_white, LocalTask, RectExt, SafeTexture}, l10n::{LanguageIdentifier, LANG_IDENTS, LANG_NAMES}, scene::{request_input, return_input, show_error, show_message, take_input}, task::Task, ui::{DRectButton, Scroll, Slider, Ui}
 };
 use reqwest::Url;
 use std::{borrow::Cow, fs, io, net::ToSocketAddrs, path::PathBuf, sync::atomic::Ordering};
@@ -672,6 +667,13 @@ impl ChartList {
     }
 
     pub fn update(&mut self, _t: f32) -> Result<bool> {
+        let data = get_data_mut();
+        if let ((id, text)) = take_input() {
+            if id == "combo_text" {
+                data.config.combo_label = text;
+                return Ok(true);
+            }
+        }
         Ok(false)
     }
 
