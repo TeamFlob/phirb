@@ -447,7 +447,7 @@ impl GameScene {
                     ui.text(&res.info.level).pos(-lf, bt).anchor(1., 1.).size(0.5).color(c).draw();
                 });
             if res.config.show_watermark {
-                ui.text(&res.config.watermark_text).pos(0., -top*0.98+(1.-p)*0.4).anchor(0.5, 1.).size(0.5*res.config.watermark_size).color(Color::new(1., 1., 1., 0.8)).draw();
+                ui.text(&res.config.watermark_text).pos(0., -top*0.98+(1.-p)*0.4).anchor(0.5, 1.).size(0.33*res.config.watermark_size).color(Color::new(1., 1., 1., 0.8)).draw();
             }
 
             let hw = 0.003;
