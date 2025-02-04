@@ -49,7 +49,8 @@ item-opt-sub = 采用激进的优化策略，提升性能但可能导致部分�
 item-speed = 速度
 item-note-size = 音符大小
 item-combo-label = COMBO提示
-item-combo-sub = COMBO数字下显示的文字
+item-show-watermark = 显示水印
+item-watermark-text = 水印显示的文字
 
 item-chart-debug = 谱面调试
 item-chart-debug-sub = 显示判定线编号和朝向
