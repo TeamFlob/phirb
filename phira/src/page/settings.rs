@@ -715,7 +715,7 @@ impl ChartList {
         }
         item! {
             render_title(ui, tl!("item-combo-label"), None);
-            render_switch(ui, rr, t, &mut self.combo_label, config.combo_label);
+            self.combo_label.render_text(ui, rr, t, &config.combo_label, 0.4, false);
         }
         (w, h)
     }
