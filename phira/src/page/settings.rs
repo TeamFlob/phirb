@@ -668,7 +668,7 @@ impl ChartList {
 
     pub fn update(&mut self, _t: f32) -> Result<bool> {
         let data = get_data_mut();
-        if let ((id, text)) = take_input() {
+        if let Some((id, text)) = take_input() {
             if id == "combo_text" {
                 data.config.combo_label = text;
                 return Ok(true);
