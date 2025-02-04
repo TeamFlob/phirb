@@ -672,6 +672,8 @@ impl ChartList {
             if id == "combo_text" {
                 data.config.combo_label = text;
                 return Ok(true);
+            } else {
+                return_input(id, text);
             }
         }
         Ok(false)
