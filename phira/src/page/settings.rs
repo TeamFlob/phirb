@@ -617,6 +617,7 @@ struct ChartList {
     combo_label: DRectButton,
     show_watermark_btn: DRectButton,
     watermark_text: DRectButton,
+    watermark_size: Slider,
 }
 
 impl ChartList {
@@ -631,6 +632,7 @@ impl ChartList {
             combo_label: DRectButton::new(),
             show_watermark_btn: DRectButton::new(),
             watermark_text: DRectButton::new(),
+            watermark_size: Slider::new(1.0..1.5, 0.05),
         }
     }
 
@@ -674,7 +676,10 @@ impl ChartList {
         if self.watermark_text.touch(touch, t) {
             request_input("watermark_text", &config.watermark_text);
             return Ok(Some(true));
-        } 
+        }
+        if let wt @ Some(_) = self.watermark_size.touch(touch, t, &mut config.watermark_size) {
+            return Ok(wt);
+        }
         Ok(None)
     }
 
@@ -733,7 +738,7 @@ impl ChartList {
             self.size_slider.render(ui, rr, t, config.note_scale, format!("{:.3}", config.note_scale));
         }
         item! {
-            render_title(ui, tl!("item-combo-label"), None);
+            render_title(ui, tl!("item-combo-label"), Some(tl!("item-combo-label-sub")));
             self.combo_label.render_text(ui, rr, t, &config.combo_label, 0.4, false);
         }
         item! {
@@ -743,6 +748,10 @@ impl ChartList {
         item! {
             render_title(ui, tl!("item-watermark-text"), None);
             self.watermark_text.render_text(ui, rr, t, &config.watermark_text, 0.4, false);
+        }
+        item! {
+            render_title(ui, tl!("item-watermark-size"), None);
+            self.watermark_size.render(ui, rr, t, config.watermark_size, format!("{:.2}", config.watermark_size));
         }
         (w, h)
     }

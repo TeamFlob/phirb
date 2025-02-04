@@ -53,6 +53,7 @@ pub struct Config {
     pub combo_label: String,
     pub show_watermark: bool,
     pub watermark_text: String,
+    pub watermark_size: f32,
 
     // for compatibility
     autoplay: Option<bool>,
@@ -92,6 +93,7 @@ impl Default for Config {
             combo_label: "COMBO".to_owned(),
             show_watermark: false,
             watermark_text: "".to_owned(),
+            watermark_size: 1.0,
 
             autoplay: None,
         }
