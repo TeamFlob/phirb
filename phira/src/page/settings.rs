@@ -736,6 +736,14 @@ impl ChartList {
             render_title(ui, tl!("item-combo-label"), None);
             self.combo_label.render_text(ui, rr, t, &config.combo_label, 0.4, false);
         }
+        item! {
+            render_title(ui, tl!("item-show-watermark"), None);
+            render_switch(ui, rr, t, &mut self.show_watermark_btn, config.show_watermark);
+        }
+        item! {
+            render_title(ui, tl!("item-watermark-text"), None);
+            self.watermark_text.render_text(ui, rr, t, &config.watermark_text, 0.4, false);
+        }
         (w, h)
     }
 }
