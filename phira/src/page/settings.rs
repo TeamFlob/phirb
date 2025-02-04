@@ -615,6 +615,8 @@ struct ChartList {
     speed_slider: Slider,
     size_slider: Slider,
     combo_label: DRectButton,
+    show_watermark_btn: DRectButton,
+    watermark_text: DRectButton,
 }
 
 impl ChartList {
@@ -627,6 +629,8 @@ impl ChartList {
             speed_slider: Slider::new(0.5..2., 0.05),
             size_slider: Slider::new(0.8..1.2, 0.005),
             combo_label: DRectButton::new(),
+            show_watermark_btn: DRectButton::new(),
+            watermark_text: DRectButton::new(),
         }
     }
 
@@ -663,6 +667,14 @@ impl ChartList {
             request_input("combo_text", &config.combo_label);
             return Ok(Some(true));
         }
+        if self.show_watermark_btn.touch(touch, t) {
+            config.show_watermark ^= true;
+            return Ok(Some(true));
+        }
+        if self.watermark_text.touch(touch, t) {
+            request_input("watermark_text", &config.watermark_text);
+            return Ok(Some(true));
+        } 
         Ok(None)
     }
 
@@ -672,6 +684,9 @@ impl ChartList {
             if id == "combo_text" {
                 data.config.combo_label = text;
                 return Ok(true);
+            } else if id == "watermark_text" {
+                data.config.watermark_text = text;
+                return Ok(true)
             } else {
                 return_input(id, text);
             }

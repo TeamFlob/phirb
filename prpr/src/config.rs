@@ -51,6 +51,8 @@ pub struct Config {
     pub volume_sfx: f32,
     pub volume_bgm: f32,
     pub combo_label: String,
+    pub show_watermark: bool,
+    pub watermark_text: String,
 
     // for compatibility
     autoplay: Option<bool>,
@@ -88,6 +90,8 @@ impl Default for Config {
             volume_sfx: 1.,
             volume_bgm: 1.,
             combo_label: "COMBO".to_owned(),
+            show_watermark: false,
+            watermark_text: "".to_owned(),
 
             autoplay: None,
         }
