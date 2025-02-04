@@ -619,6 +619,7 @@ struct ChartList {
     opt_btn: DRectButton,
     speed_slider: Slider,
     size_slider: Slider,
+    combo_label: DRectButton,
 }
 
 impl ChartList {
@@ -630,6 +631,7 @@ impl ChartList {
             opt_btn: DRectButton::new(),
             speed_slider: Slider::new(0.5..2., 0.05),
             size_slider: Slider::new(0.8..1.2, 0.005),
+            combo_label: DRectButton::new(),
         }
     }
 
@@ -661,6 +663,10 @@ impl ChartList {
         }
         if let wt @ Some(_) = self.size_slider.touch(touch, t, &mut config.note_scale) {
             return Ok(wt);
+        }
+        if self.combo_label.touch(touch, t) {
+            request_input("combo_text", &config.combo_label);
+            return Ok(Some(true));
         }
         Ok(None)
     }
@@ -706,6 +712,10 @@ impl ChartList {
         item! {
             render_title(ui, tl!("item-note-size"), None);
             self.size_slider.render(ui, rr, t, config.note_scale, format!("{:.3}", config.note_scale));
+        }
+        item! {
+            render_title(ui, tl!("item-combo-label"), None);
+            render_switch(ui, rr, t, &mut self.combo_label, config.combo_label);
         }
         (w, h)
     }

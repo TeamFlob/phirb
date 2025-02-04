@@ -420,7 +420,7 @@ impl GameScene {
                 let combo_top = btm + 0.01;
                 self.chart
                     .with_element(ui, res, UIElement::Combo, Some((0., combo_top + unit_h * 0.2)), |ui, c| {
-                        ui.text(if res.config.autoplay() { "COMBO" } else { "COMBO" })
+                        ui.text(&res.config.combo_label)
                             .pos(0., combo_top)
                             .anchor(0.5, 0.)
                             .size(0.4)
