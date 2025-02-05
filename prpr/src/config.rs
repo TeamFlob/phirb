@@ -54,6 +54,13 @@ pub struct Config {
     pub show_watermark: bool,
     pub watermark_text: String,
     pub watermark_size: f32,
+    pub show_custom_character: bool,
+    pub custom_name: String,
+    pub custom_intro: String,
+    pub custom_name_en: String,
+    pub custom_design: String,
+    pub custom_artist: String,
+    pub character_y_offset: f32,
 
     // for compatibility
     autoplay: Option<bool>,
@@ -94,6 +101,13 @@ impl Default for Config {
             show_watermark: false,
             watermark_text: "".to_owned(),
             watermark_size: 1.0,
+            show_custom_character: false,
+            custom_name: "".to_owned(),
+            custom_intro: "".to_owned(),
+            custom_name_en: "".to_owned(),
+            custom_design: "".to_owned(),
+            custom_artist: "".to_owned(),
+            character_y_offset: 0.,
 
             autoplay: None,
         }

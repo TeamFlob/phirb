@@ -1,6 +1,6 @@
 prpr::tl_file!("settings");
 
-use super::{NextPage, OffsetPage, Page, SharedState};
+use super::{HomePage, NextPage, OffsetPage, Page, SharedState};
 use crate::{
     dir, get_data, get_data_mut,
     popup::ChooseButton,
@@ -13,7 +13,7 @@ use anyhow::Result;
 use bytesize::ByteSize;
 use macroquad::prelude::*;
 use prpr::{
-    config, core::BOLD_FONT, ext::{open_url, poll_future, semi_white, LocalTask, RectExt, SafeTexture}, l10n::{LanguageIdentifier, LANG_IDENTS, LANG_NAMES}, scene::{request_input, return_input, show_error, show_message, take_input}, task::Task, ui::{DRectButton, Scroll, Slider, Ui}
+    config, core::BOLD_FONT, ext::{open_url, poll_future, semi_white, LocalTask, RectExt, SafeTexture}, l10n::{LanguageIdentifier, LANG_IDENTS, LANG_NAMES}, scene::{request_file, request_input, return_input, show_error, show_message, take_input}, task::Task, ui::{DRectButton, Scroll, Slider, Ui}
 };
 use reqwest::Url;
 use std::{borrow::Cow, fs, io, net::ToSocketAddrs, path::PathBuf, sync::atomic::Ordering};
@@ -28,6 +28,7 @@ enum SettingListType {
     Audio,
     Chart,
     Debug,
+    Custom,
     About,
 }
 
@@ -36,6 +37,7 @@ pub struct SettingsPage {
     list_audio: AudioList,
     list_chart: ChartList,
     list_debug: DebugList,
+    list_custom: CustomList,
 
     tabs: Tabs<SettingListType>,
 
@@ -54,14 +56,16 @@ impl SettingsPage {
             list_audio: AudioList::new(),
             list_chart: ChartList::new(),
             list_debug: DebugList::new(),
+            list_custom: CustomList::new(),
 
             tabs: Tabs::new([
                 (SettingListType::General, || tl!("general")),
                 (SettingListType::Audio, || tl!("audio")),
                 (SettingListType::Chart, || tl!("chart")),
                 (SettingListType::Debug, || tl!("debug")),
+                (SettingListType::Custom, || tl!("custom")),
                 (SettingListType::About, || tl!("about")),
-            ] as [(SettingListType, TitleFn); 5]),
+            ] as [(SettingListType, TitleFn); 6]),
 
             scroll: Scroll::new(),
             save_time: f32::INFINITY,
@@ -91,6 +95,7 @@ impl Page for SettingsPage {
             SettingListType::Audio => self.list_audio.top_touch(touch, t),
             SettingListType::Chart => self.list_chart.top_touch(touch, t),
             SettingListType::Debug => self.list_debug.top_touch(touch, t),
+            SettingListType::Custom => self.list_custom.top_touch(touch, t),
             SettingListType::About => false,
         } {
             return Ok(true);
@@ -108,6 +113,7 @@ impl Page for SettingsPage {
             SettingListType::Audio => self.list_audio.touch(touch, t)?,
             SettingListType::Chart => self.list_chart.touch(touch, t)?,
             SettingListType::Debug => self.list_debug.touch(touch, t)?,
+            SettingListType::Custom => self.list_custom.touch(touch, t)?,
             SettingListType::About => None,
         } {
             if p {
@@ -127,6 +133,7 @@ impl Page for SettingsPage {
             SettingListType::Audio => self.list_audio.update(t)?,
             SettingListType::Chart => self.list_chart.update(t)?,
             SettingListType::Debug => self.list_debug.update(t)?,
+            SettingListType::Custom => self.list_custom.update(t)?,
             SettingListType::About => false,
         } {
             self.save_time = t;
@@ -155,6 +162,7 @@ impl Page for SettingsPage {
                         SettingListType::Audio => self.list_audio.render(ui, r, t),
                         SettingListType::Chart => self.list_chart.render(ui, r, t),
                         SettingListType::Debug => self.list_debug.render(ui, r, t),
+                        SettingListType::Custom => self.list_custom.render(ui, r, t),
                         SettingListType::About => render_settings(ui, r, &self.icon),
                     });
                 });
@@ -691,7 +699,7 @@ impl ChartList {
                 return Ok(true);
             } else if id == "watermark_text" {
                 data.config.watermark_text = text;
-                return Ok(true)
+                return Ok(true);
             } else {
                 return_input(id, text);
             }
@@ -813,6 +821,147 @@ impl DebugList {
         item! {
             render_title(ui, tl!("item-touch-debug"), Some(tl!("item-touch-debug-sub")));
             render_switch(ui, rr, t, &mut self.touch_debug_btn, config.touch_debug);
+        }
+        (w, h)
+    }
+}
+struct CustomList {
+    show_custom_c_btn: DRectButton,
+    custom_c: DRectButton,
+    custom_char_name: DRectButton,
+    custom_char_name_en: DRectButton,
+    custom_char_intro: DRectButton,
+    custom_char_artist: DRectButton,
+    custom_char_designer: DRectButton,
+    custom_char_y_offset: Slider,
+}
+
+impl CustomList {
+    pub fn new() -> Self {
+        Self {
+            show_custom_c_btn: DRectButton::new(),
+            custom_c: DRectButton::new(),
+            custom_char_name: DRectButton::new(),
+            custom_char_name_en: DRectButton::new(),
+            custom_char_intro: DRectButton::new(),
+            custom_char_artist: DRectButton::new(),
+            custom_char_designer: DRectButton::new(),
+            custom_char_y_offset: Slider::new(0.0..1., 0.1),
+        }
+    }
+
+    pub fn top_touch(&mut self, _touch: &Touch, _t: f32) -> bool {
+        false
+    }
+
+    pub fn touch(&mut self, touch: &Touch, t: f32) -> Result<Option<bool>> {
+        let data = get_data_mut();
+        let config = &mut data.config;
+        if self.show_custom_c_btn.touch(touch, t) {
+            show_message("修改角色立绘将在游戏重启后生效！").ok();
+            config.show_custom_character ^= true;
+            return Ok(Some(true));
+        }
+        if self.custom_c.touch(touch, t) {
+            request_file("_import_character");
+            return Ok(Some(true));
+        }
+        if self.custom_char_name.touch(touch, t) {
+            request_input("name", &config.custom_name);
+            return Ok(Some(true));
+        }
+        if self.custom_char_name_en.touch(touch, t) {
+            request_input("name_en", &config.custom_name_en);
+            return Ok(Some(true));
+        }
+        if self.custom_char_artist.touch(touch, t) {
+            request_input("artist", &config.custom_artist);
+            return Ok(Some(true));
+        }
+        if self.custom_char_designer.touch(touch, t) {
+            request_input("designer", &config.custom_design);
+            return Ok(Some(true));
+        }
+        if self.custom_char_intro.touch(touch, t){
+            request_input("intro", &config.custom_intro);
+            return Ok(Some(true));
+        }
+        if let wt @ Some(_) = self.custom_char_y_offset.touch(touch, t, &mut config.character_y_offset) {
+            return Ok(wt);
+        }
+        Ok(None)
+    }
+
+    pub fn update(&mut self, _t: f32) -> Result<bool> {
+        let mut data = get_data_mut();
+        if let Some((id, text)) = take_input() {
+            if id == "name" {
+                data.config.custom_name = text;
+                return Ok(true);
+            } else if id == "name_en" {
+                data.config.custom_name_en = text;
+                return Ok(true);
+            } else if id == "designer" {
+                data.config.custom_design = text;
+                return Ok(true);
+            } else if id == "artist" {
+                data.config.custom_artist = text;
+                return Ok(true);
+            } else if id == "intro" {
+                data.config.custom_intro = text;
+                return Ok(true);
+            } else {
+                return_input(id, text);
+            }
+        }
+        Ok(false)
+    }
+
+    pub fn render(&mut self, ui: &mut Ui, r: Rect, t: f32) -> (f32, f32) {
+        let w = r.w;
+        let mut h = 0.;
+        macro_rules! item {
+            ($($b:tt)*) => {{
+                $($b)*
+                ui.dy(ITEM_HEIGHT);
+                h += ITEM_HEIGHT;
+            }}
+        }
+        let rr = right_rect(w);
+
+        let data = get_data();
+        let config = &data.config;
+        item! {
+            render_title(ui, tl!("item-show-custom-c"), None);
+            render_switch(ui, rr, t, &mut self.show_custom_c_btn, config.show_custom_character);
+        }
+        item! {
+            render_title(ui, tl!("item-custom-c"), Some(tl!("item-custom-c-sub")));
+            self.custom_c.render_text(ui, rr, t, tl!("item-custom-c-upload"), 0.5, false);
+        }
+        item! {
+            render_title(ui, tl!("item-custom-name"), None);
+            self.custom_char_name.render_text(ui, rr, t, &config.custom_name, 0.5, false);
+        }
+        item! {
+            render_title(ui, tl!("item-custom-name-en"), None);
+            self.custom_char_name_en.render_text(ui, rr, t, &config.custom_name_en, 0.5, false);
+        }
+        item! {
+            render_title(ui, tl!("item-custom-intro"), None);
+            self.custom_char_intro.render_text(ui, rr, t, &config.custom_intro, 0.5, false);
+        }
+        item! {
+            render_title(ui, tl!("item-custom-artist"), None);
+            self.custom_char_artist.render_text(ui, rr, t, &config.custom_artist, 0.5, false);
+        }
+        item! {
+            render_title(ui, tl!("item-custom-designer"), None);
+            self.custom_char_designer.render_text(ui, rr, t, &config.custom_design, 0.5, false);
+        }
+        item! {
+            render_title(ui, tl!("item-custom-y-offset"), None);
+            self.custom_char_y_offset.render(ui, rr, t, config.character_y_offset, format!("{:.1}", config.character_y_offset));
         }
         (w, h)
     }

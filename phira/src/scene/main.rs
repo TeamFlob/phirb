@@ -9,6 +9,7 @@ use crate::{
     scene::{TEX_BACKGROUND, TEX_ICON_BACK},
 };
 use anyhow::{anyhow, Context, Result};
+use futures_util::io::BufWriter;
 use macroquad::prelude::*;
 use once_cell::sync::Lazy;
 use prpr::{
@@ -24,7 +25,7 @@ use std::{
     any::Any,
     cell::RefCell,
     fs::File,
-    io::BufReader,
+    io::{BufReader, Read, Write},
     sync::atomic::{AtomicBool, Ordering},
     thread_local,
     time::{Duration, Instant},
@@ -360,6 +361,15 @@ impl Scene for MainScene {
                             show_message(itl!("import-respack-success"));
                         }
                     }
+                }
+                "_import_character" => {
+                    let mut file = File::open(file)?;
+                    let mut buffer = Vec::new();
+                    file.read_to_end(&mut buffer)?;
+                    let mut file = File::create("assets/res/custom.char")?;
+                    debug!("正在向res/custom.char写入数据");
+                    file.write_all(&buffer)?;
+                    show_message("修改角色立绘将在游戏重启后生效！").ok();
                 }
                 _ => return_file(id, file),
             }

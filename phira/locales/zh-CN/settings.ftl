@@ -5,6 +5,7 @@ general = 通用
 audio = 音频
 chart = 谱面
 debug = 调试
+custom = 个性化
 about = 关于
 
 item-lang = 语言
@@ -60,6 +61,17 @@ item-touch-debug = 触摸调试
 item-touch-debug-sub = 游玩过程中显示触摸点
 
 load-cali-failed = 加载音频失败
+
+item-show-custom-c = 显示自定义角色
+item-custom-c = 自定义角色
+item-custom-c-upload = 上传
+item-custom-c-sub = 推荐上传透明背景的正方形立绘，否则可能出现效果不佳的情况
+item-custom-name = 自定义角色名称
+item-custom-name-en = 自定义角色名称（显示在右下角）
+item-custom-intro = 自定义角色介绍
+item-custom-artist = 自定义角色画师
+item-custom-designer = 自定义角色设计师
+item-custom-y-offset = 角色Y轴偏移
 
 about-content =
   Phira v{ $version }

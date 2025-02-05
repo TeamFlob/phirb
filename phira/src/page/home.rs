@@ -18,14 +18,14 @@ use crate::{
 use ::rand::{random, thread_rng, Rng};
 use anyhow::{bail, Context, Result};
 use chrono::NaiveDate;
-use image::DynamicImage;
+use image::{imageops::FilterType, DynamicImage, GenericImageView};
 use macroquad::prelude::*;
 use prpr::{
     core::BOLD_FONT,
     ext::{open_url, screen_aspect, semi_black, semi_white, RectExt, SafeTexture, ScaleType},
     info::ChartInfo,
     l10n::LANG_IDENTS,
-    scene::{show_error, NextScene},
+    scene::{show_error, show_message, NextScene},
     task::Task,
     ui::{button_hit_large, clip_rounded_rect, ClipType, DRectButton, Dialog, FontArc, RectButton, Scroll, Ui},
 };
@@ -219,6 +219,7 @@ fn fake_rd(data: Vec<u8>) -> Vec<u8> {
 
 impl HomePage {
     fn load_char_illu(&mut self) {
+        let config = &get_data().config;
         let key = if self.character.illust == "@" {
             format!("@{}", self.character.id)
         } else {
@@ -232,7 +233,11 @@ impl HomePage {
         self.char_appear_p.set(0.);
 
         self.char_illu_task = Some(Task::new(
-            async move { Ok(image::load_from_memory(&fake_rd(load_file(&format!("res/hutao.char")).await?))?) },
+            async move {if !config.show_custom_character {
+                Ok(image::load_from_memory(&fake_rd(load_file(&format!("res/hutao.char")).await?))?)
+            } else {
+                Ok(image::load_from_memory(&fake_rd(load_file(&format!("res/custom.char")).await?))?)
+            }},
         ));
     }
 
@@ -404,7 +409,10 @@ impl Page for HomePage {
                 return Ok(true);
             }
             if self.char_edit_btn.touch(touch) {
-                let _ = open_url("https://phira.moe/settings/account");
+                //let _ = open_url("https://phira.moe/settings/account");
+                show_message("请在 设置-个性化 中设置自定义角色").ok();
+                self.next_page = Some(NextPage::Overlay(Box::new(SettingsPage::new(self.icons.icon.clone(), self.icons.lang.clone()))));
+                return Ok(true);
             }
         }
         if self.btn_user.touch(touch, t) {
@@ -619,10 +627,11 @@ impl Page for HomePage {
     fn render(&mut self, ui: &mut Ui, s: &mut SharedState) -> Result<()> {
         let t = s.t;
         let rt = s.rt;
+        let data = get_data();
 
         let cp = self.char_screen_p.now(rt);
         s.render_fader(ui, |ui| {
-            let r = Rect::new(-1. + 0.14 * cp, -ui.top + 0.12, 1., 1.7);
+            let r = Rect::new(-1. + 0.14 * cp, -ui.top + 0.12 - 0.3*data.config.character_y_offset, 1., 1.7);
             if let Some(illu) = &self.char_illu {
                 let p = self.char_appear_p.now(t);
                 let (ox, oy, ow, oh) = self.character.illu_adjust;
@@ -650,7 +659,7 @@ impl Page for HomePage {
                     let pad = 0.01;
 
                     let mut t = ui
-                        .text("Hutao")
+                        .text(if data.config.show_custom_character { &data.config.custom_name_en } else { "Hutao" })
                         .pos(r.right() - pad, r.bottom() - pad)
                         .anchor(1., 1.)
                         .color(semi_white(0.2));
@@ -680,7 +689,7 @@ impl Page for HomePage {
                         self.char_scroll.render(ui, |ui| {
                             let r = Rect::new(0., 0., r.w, r.h);
                             let r = r.feather(-0.03);
-                            let r = ui.text("丧葬白事，乃是凡人最后的体面。而璃月”往生堂“，堪称人生画卷的终笔者。传统葬仪门道繁多一停灵守灵，落葬之法，牌位器具，种种环节都有着严苛的规矩。无论逝者出身贵贱，财富多寡，都要给他们置办一场合乎身份的葬礼。这便是往生堂的待客之道。如此重要的机构，它的执掌者理应学识渊博、行事慎重。然而，七十七代堂主的重任，却落到了胡桃这个小姑娘肩上。").pos(r.x, r.y).max_width(r.w).multiline().size(0.4).draw();
+                            let r = ui.text(if data.config.show_custom_character { &data.config.custom_intro } else { "丧葬白事，乃是凡人最后的体面。而璃月”往生堂“，堪称人生画卷的终笔者。传统葬仪门道繁多一停灵守灵，落葬之法，牌位器具，种种环节都有着严苛的规矩。无论逝者出身贵贱，财富多寡，都要给他们置办一场合乎身份的葬礼。这便是往生堂的待客之道。如此重要的机构，它的执掌者理应学识渊博、行事慎重。然而，七十七代堂主的重任，却落到了胡桃这个小姑娘肩上。" }).pos(r.x, r.y).max_width(r.w).multiline().size(0.4).draw();
                             (ow, r.h + 0.1)
                         });
                     });
@@ -690,20 +699,20 @@ impl Page for HomePage {
 
                 ui.alpha(cp, |ui| {
                     let r = ui
-                        .text("胡桃")
+                        .text(if data.config.show_custom_character { &data.config.custom_name } else { "胡桃" })
                         .pos(r.x + (1. - cp) * 0.12 + 0.01, r.center().y)
                         .anchor(0., 0.5)
                         .size(self.character.name_size.unwrap_or(1.4))
                         .draw_using(&BOLD_FONT);
 
                     let off = if self.character.baseline { 0. } else { 0.01 };
-                    ui.text("Artist: Grnshin-Impact")
+                    ui.text(format!("Artist: {}", if data.config.show_custom_character { &data.config.custom_artist } else { "miHoYo" }))
                         .pos(r.right() + (1. - cp) * 0.1 + 0.02, r.bottom() + off - 0.03)
                         .anchor(0., 1.)
                         .size(0.34)
                         .color(semi_white(0.7))
                         .draw();
-                    ui.text("Designer: Genshin-Impact")
+                    ui.text(format!("Designer: {}", if data.config.show_custom_character { &data.config.custom_artist } else { "miHoYo" }))
                         .pos(r.right() + (1. - cp) * 0.1 + 0.016, r.bottom() + off)
                         .anchor(0., 1.)
                         .size(0.34)
