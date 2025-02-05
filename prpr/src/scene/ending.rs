@@ -319,7 +319,7 @@ impl Scene for EndingScene {
 
             if let Some(s) = &self.update_state {
                 if s.best {
-                    ui.text(format!("{}  {:+07}", tl!("new-best"), 1437))
+                    ui.text(format!("{}  {:+07}", tl!("new-best"), s.improvement))
                         .pos(x - 0.01, y - 0.016)
                         .anchor(1., 1.)
                         .color(semi_white(pf))
@@ -349,7 +349,7 @@ impl Scene for EndingScene {
             let r = ui.text("|").pos(r.right() + 0.03, r.y).color(cs).size(s).draw();
 
             let r = ui.text(tl!("error")).pos(r.right() + 0.03, r.y).color(cl).size(s).draw_using(&BOLD_FONT);
-            ui.text("±52ms")
+            ui.text(format!("±{}ms", (res.std * 1000.).round() as i32))
                 .pos(r.right() + 0.02, r.y)
                 .size(s)
                 .color(ct)

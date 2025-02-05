@@ -5,6 +5,7 @@ general = 通用
 audio = 音频
 chart = 谱面
 debug = 调试
+custom = 个性化
 about = 关于
 
 item-lang = 语言
@@ -48,6 +49,11 @@ item-opt = 激进优化
 item-opt-sub = 采用激进的优化策略，提升性能但可能导致部分谱面显示出错
 item-speed = 速度
 item-note-size = 音符大小
+item-combo-label = COMBO提示
+item-combo-label-sub = 默认字体不支持中文(除非你改了字体)
+item-show-watermark = 显示水印
+item-watermark-text = 水印显示的文字
+item-watermark-size = 水印大小
 
 item-chart-debug = 谱面调试
 item-chart-debug-sub = 显示判定线编号和朝向
@@ -55,6 +61,17 @@ item-touch-debug = 触摸调试
 item-touch-debug-sub = 游玩过程中显示触摸点
 
 load-cali-failed = 加载音频失败
+
+item-show-custom-c = 显示自定义角色
+item-custom-c = 自定义角色
+item-custom-c-upload = 上传
+item-custom-c-sub = 推荐上传透明背景的正方形立绘，否则可能出现效果不佳的情况
+item-custom-name = 自定义角色名称
+item-custom-name-en = 自定义角色名称（显示在右下角）
+item-custom-intro = 自定义角色介绍
+item-custom-artist = 自定义角色画师
+item-custom-designer = 自定义角色设计师
+item-custom-y-offset = 角色Y轴偏移
 
 about-content =
   Phira v{ $version }

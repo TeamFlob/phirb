@@ -420,7 +420,7 @@ impl GameScene {
                 let combo_top = btm + 0.01;
                 self.chart
                     .with_element(ui, res, UIElement::Combo, Some((0., combo_top + unit_h * 0.2)), |ui, c| {
-                        ui.text(if res.config.autoplay() { "COMBO" } else { "COMBO" })
+                        ui.text(if (!res.config.autoplay() || res.config.combo_label.trim() != "COMBO") { &res.config.combo_label } else { "AUTOPLAY" })
                             .pos(0., combo_top)
                             .anchor(0.5, 0.)
                             .size(0.4)
@@ -446,6 +446,9 @@ impl GameScene {
                 .with_element(ui, res, UIElement::Level, Some((-lf - ct.x, bt - ct.y)), |ui, c| {
                     ui.text(&res.info.level).pos(-lf, bt).anchor(1., 1.).size(0.5).color(c).draw();
                 });
+            if res.config.show_watermark {
+                ui.text(&res.config.watermark_text).pos(0., -top*0.98+(1.-p)*0.4).anchor(0.5, 1.).size(0.33*res.config.watermark_size).color(Color::new(1., 1., 1., 0.8)).draw();
+            }
 
             let hw = 0.003;
             let height = eps * 1.2;
