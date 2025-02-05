@@ -32,8 +32,7 @@ use prpr::{
 use reqwest::StatusCode;
 use serde::Deserialize;
 use std::{
-    borrow::Cow,
-    sync::{atomic::Ordering, Arc},
+    borrow::Cow, fs::File, io::Read, path::Path, sync::{atomic::Ordering, Arc}
 };
 use tap::Tap;
 use tracing::{info, warn};
@@ -236,7 +235,11 @@ impl HomePage {
             async move {if !config.show_custom_character {
                 Ok(image::load_from_memory(&fake_rd(load_file(&format!("res/hutao.char")).await?))?)
             } else {
-                Ok(image::load_from_memory(&fake_rd(load_file(&format!("../data/custom.char")).await?))?)
+                let root = dir::root()?;
+                let mut file = File::open(format!("{root}/custom.char"))?;
+                let mut data = Vec::new();
+                file.read_to_end(&mut data)?;
+                Ok(image::load_from_memory(&fake_rd(data))?)
             }},
         ));
     }
