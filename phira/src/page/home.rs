@@ -236,7 +236,7 @@ impl HomePage {
             async move {if !config.show_custom_character {
                 Ok(image::load_from_memory(&fake_rd(load_file(&format!("res/hutao.char")).await?))?)
             } else {
-                Ok(image::load_from_memory(&fake_rd(load_file(&format!("res/custom.char")).await?))?)
+                Ok(image::load_from_memory(&fake_rd(load_file(&format!("../data/custom.char")).await?))?)
             }},
         ));
     }

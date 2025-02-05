@@ -365,12 +365,12 @@ impl Scene for MainScene {
                 }
                 "_import_character" => {
                     if !Path::new("res").exists() {
-                        create_dir_all("res")?;
+                        create_dir_all("data/")?;
                     }
                     let mut file = File::open(file)?;
                     let mut buffer = Vec::new();
                     file.read_to_end(&mut buffer)?;
-                    let mut file = File::create(format!("res/custom.char"))?;
+                    let mut file = File::create(format!("data/custom.char"))?;
                     file.write_all(&buffer)?;
                     show_message("修改角色立绘将在游戏重启后生效！").ok();
                 }
