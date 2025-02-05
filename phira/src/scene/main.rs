@@ -24,9 +24,10 @@ use sasa::{AudioClip, Music};
 use std::{
     any::Any,
     cell::RefCell,
-    fs::File,
+    fs::{create_dir_all, File},
     io::{BufReader, Read, Write},
     sync::atomic::{AtomicBool, Ordering},
+    path::Path,
     thread_local,
     time::{Duration, Instant},
 };
@@ -363,11 +364,13 @@ impl Scene for MainScene {
                     }
                 }
                 "_import_character" => {
+                    if !Path::new("res").exists() {
+                        create_dir_all("res")?;
+                    }
                     let mut file = File::open(file)?;
                     let mut buffer = Vec::new();
                     file.read_to_end(&mut buffer)?;
-                    let mut file = File::create("assets/res/custom.char")?;
-                    debug!("正在向res/custom.char写入数据");
+                    let mut file = File::create(format!("res/custom.char"))?;
                     file.write_all(&buffer)?;
                     show_message("修改角色立绘将在游戏重启后生效！").ok();
                 }
